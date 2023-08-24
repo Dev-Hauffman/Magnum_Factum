@@ -1,0 +1,85 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0nlufewfa3hs"]
+
+[ext_resource type="Script" path="res://scenes/test_scene/test_screen/question.gd" id="1_82gox"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_315wx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[node name="QuestionContainer" type="PanelContainer"]
+offset_right = 128.0
+offset_bottom = 557.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_315wx")
+script = ExtResource("1_82gox")
+
+[node name="QuestionMarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="ContentContainer" type="VBoxContainer" parent="QuestionMarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="NumberLabel" type="Label" parent="QuestionMarginContainer/ContentContainer"]
+layout_mode = 2
+text = "Question 1
+"
+
+[node name="QuestionLabel" type="Label" parent="QuestionMarginContainer/ContentContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/line_spacing = 2
+text = "In logica, mathematica, computatrum scientia et linguistica, lingua formalis consistit in verbis, quarum litterae ab alphabeto sumuntur et formantur secundum certas regulas."
+autowrap_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="QuestionMarginContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label3" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "T"
+
+[node name="Label" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "T"
+
+[node name="Label2" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "T"
+
+[node name="Label4" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "T"
+
+[node name="Label5" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "T"
+
+[node name="Label6" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "T"
+
+[node name="Label7" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "T"
+
+[node name="Label8" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "T"

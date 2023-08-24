@@ -10,9 +10,9 @@ script = ExtResource("1_p0b4e")
 clip_contents = true
 offset_right = 640.0
 offset_bottom = 360.0
+columns = 2
 
 [node name="CharacterViewportContainer2" type="SubViewportContainer" parent="GridContainer"]
-visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -20,8 +20,8 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="GridContainer/CharacterViewportContainer2"]
 handle_input_locally = false
-size = Vector2i(640, 178)
-render_target_update_mode = 0
+size = Vector2i(318, 360)
+render_target_update_mode = 4
 
 [node name="CharacterCamera2D" type="Camera2D" parent="GridContainer/CharacterViewportContainer2/SubViewport"]
 
@@ -34,7 +34,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="GridContainer/TestViewportContainer"]
 handle_input_locally = false
-size = Vector2i(640, 360)
+size = Vector2i(318, 360)
 render_target_update_mode = 4
 
 [node name="TestCamera2D" type="Camera2D" parent="GridContainer/TestViewportContainer/SubViewport"]

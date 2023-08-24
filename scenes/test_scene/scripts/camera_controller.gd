@@ -13,7 +13,7 @@ var mouse_final_position: Vector2
 var camera: Camera2D
 
 
-func initialize(target_camera:Camera2D, defined_limits):
+func initialize(target_camera:Camera2D):
 	camera = target_camera
 
 
@@ -21,6 +21,10 @@ func set_camera_limits(top_limit: int, right_limit: int, bottom_limit: int, left
 	camera.limit_top = top_limit
 	camera.limit_left = left_limit
 	camera.limit_right = right_limit
+	camera.limit_bottom = bottom_limit
+
+
+func set_bottom_limit(bottom_limit):
 	camera.limit_bottom = bottom_limit
 
 
