@@ -7,6 +7,13 @@ var current_score:float = 0
 var paragraphs:Array[RichTextLabel] = []
 var current_paragraph:int = 0
 var can_click:bool = true
+var margin_value:int = 8
+
+var style_box = load("res://resources/question_underline.tres")
+var notepen_font = load("res://resources/fonts/Notepen.ttf")
+var note_taker_font_1 = load("res://resources/fonts/note-taker.otf")
+var note_taker_font_2 = load("res://resources/fonts/note-taker.ttf")
+var caveat_font = load("res://resources/fonts/Caveat-VariableFont_wght.ttf")
 
 
 @onready var question_number = $QuestionMarginContainer/ContentContainer/NumberLabel
@@ -23,17 +30,17 @@ func initialize(content:QuestionInfo):
 	
 	var margin:MarginContainer = MarginContainer.new()
 	add_child(margin)
-	margin.add_theme_constant_override("margin_left",20)
-	margin.add_theme_constant_override("margin_top",20)
-	margin.add_theme_constant_override("margin_right",20)
-	margin.add_theme_constant_override("margin_bottom",20)
+	margin.add_theme_constant_override("margin_left", margin_value)
+	margin.add_theme_constant_override("margin_top", margin_value)
+	margin.add_theme_constant_override("margin_right", margin_value)
+	margin.add_theme_constant_override("margin_bottom", margin_value)
 	
 	var underlines:VBoxContainer = VBoxContainer.new()
 	margin.add_child(underlines)
 	
 	var extra_space:Label = Label.new()
 	underlines.add_child(extra_space)
-	extra_space.add_theme_font_size_override("font_size", 15) #test/ mess around with this # bottom width = 1, font size = 16
+	extra_space.add_theme_font_size_override("font_size", 9) #test/ mess around with this # bottom width = 1, font size = 16
 	
 	var number_of_lines:int = 0
 	for question in content.paragraph:
@@ -42,7 +49,11 @@ func initialize(content:QuestionInfo):
 		question_text.fit_content = true
 		question_text.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 		question_text.text = question
+		question_text.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 		question_text.add_theme_constant_override("line_separation", 1) #avoid changing this
+		question_text.add_theme_font_override("normal_font", caveat_font)
+		question_text.add_theme_color_override("default_color", Color.BLACK)
+		question_text.add_theme_font_size_override("normal_font_size", 6)
 		await get_tree().create_timer(0.01).timeout # it's here because only in the next frame it updates the wrapping (from what I remember)
 		number_of_lines += question_text.get_line_count()
 		question_text.visible_characters = 0
@@ -51,9 +62,9 @@ func initialize(content:QuestionInfo):
 	for line in number_of_lines:
 		var filler_label:Label = Label.new()
 		underlines.add_child(filler_label)
-		filler_label.add_theme_font_size_override("font_size", 13) #test/ mess around with this # bottom width = 1, font size = 16
+		filler_label.add_theme_font_size_override("font_size", 3) #test/ mess around with this # bottom width = 1, font size = 16
 		filler_label.add_theme_constant_override("line_spacing", 3) #avoid changing this
-		var style_box = load("res://resources/question_underline.tres")
+		filler_label.add_theme_font_override("font", caveat_font)
 		filler_label.add_theme_stylebox_override("normal", style_box)
 
 

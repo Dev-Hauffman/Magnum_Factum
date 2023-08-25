@@ -24,16 +24,16 @@ script = ExtResource("1_au1b5")
 script = ExtResource("2_arboi")
 
 [node name="LimitsContainer" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(1920, 4096)
-offset_left = -630.0
-offset_top = -238.0
-offset_right = 1290.0
-offset_bottom = 1810.0
+custom_minimum_size = Vector2(1280, 1280)
+offset_left = -488.0
+offset_top = -98.0
+offset_right = 792.0
+offset_bottom = 1182.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_p3a5l")
 
 [node name="TestPanelContainer" type="PanelContainer" parent="."]
-custom_minimum_size = Vector2(640, 0)
-offset_right = 640.0
+custom_minimum_size = Vector2(300, 0)
+offset_right = 250.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ne7ci")
 

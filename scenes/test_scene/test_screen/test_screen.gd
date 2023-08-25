@@ -3,6 +3,7 @@ extends Node2D
 
 var questions:Array[QuestionInfo] = []
 var final_score:float = 0
+var middle
 
 
 @onready var camera_controller:CameraController = $CameraController
@@ -25,7 +26,8 @@ func _ready():
 
 func initialize(camera:Camera2D):
 	camera_controller.initialize(camera)
-	camera_controller.set_camera_position(Vector2(limits.size.x/2 - get_window().size.x/2, test_container.position.y))
+	middle = limits.global_position.x + (limits.size.x/2)
+	camera_controller.set_camera_position(Vector2(middle, test_container.position.y))
 	var top_limit = limits.global_position.y
 	var right_limit = limits.global_position.x + limits.size.x
 	var bottom_limit = limits.global_position.y + limits.size.y
@@ -33,6 +35,7 @@ func initialize(camera:Camera2D):
 	camera_controller.set_camera_limits(top_limit, right_limit, bottom_limit, left_limit)
 	generate_questions()
 	add_questions()
+	move_camera()
 
 
 func generate_questions():
@@ -46,6 +49,12 @@ func add_questions():
 		questions_container.add_child(question)
 		question.initialize(entry)
 		question.connect("clicked", Callable(self, "treat_question_click"))
+
+
+func move_camera():
+	var first_question = questions_container.get_child(0)
+	var height_middle = first_question.position.x + first_question.size.x/2
+	camera_controller.move_camera_to(Vector2(middle,height_middle))
 
 
 func treat_question_click():

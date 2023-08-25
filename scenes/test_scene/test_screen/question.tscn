@@ -1,14 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://b0nlufewfa3hs"]
+[gd_scene load_steps=5 format=3 uid="uid://b0nlufewfa3hs"]
 
 [ext_resource type="Script" path="res://scenes/test_scene/test_screen/question.gd" id="1_82gox"]
+[ext_resource type="FontFile" uid="uid://cwtp0hj24ukhe" path="res://resources/fonts/Notepen.ttf" id="2_3h3w4"]
 [ext_resource type="StyleBox" uid="uid://b6q82eehgic7m" path="res://resources/question_underline.tres" id="2_4kkmf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_315wx"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 border_color = Color(0, 0, 0, 1)
 
 [node name="QuestionContainer" type="PanelContainer"]
@@ -19,24 +20,31 @@ script = ExtResource("1_82gox")
 
 [node name="QuestionMarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="ContentContainer" type="VBoxContainer" parent="QuestionMarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="NumberLabel" type="Label" parent="QuestionMarginContainer/ContentContainer"]
+[node name="NumberLabel" type="RichTextLabel" parent="QuestionMarginContainer/ContentContainer"]
+texture_filter = 1
 layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 10
 text = "Question 1
 "
+fit_content = true
 
 [node name="QuestionLabel" type="Label" parent="QuestionMarginContainer/ContentContainer"]
 visible = false
+texture_filter = 1
 layout_mode = 2
 theme_override_constants/line_spacing = 2
+theme_override_fonts/font = ExtResource("2_3h3w4")
+theme_override_font_sizes/font_size = 10
 text = "In logica, mathematica, computatrum scientia et linguistica, lingua formalis consistit in verbis, quarum litterae ab alphabeto sumuntur et formantur secundum certas regulas."
 autowrap_mode = 1
 
@@ -47,11 +55,13 @@ theme_override_constants/separation = 0
 
 [node name="Label3" type="RichTextLabel" parent="QuestionMarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 11
 text = "T"
+fit_content = true
 
 [node name="Label" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 10
 theme_override_styles/normal = ExtResource("2_4kkmf")
 text = "T"
 

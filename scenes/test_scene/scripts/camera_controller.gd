@@ -8,8 +8,8 @@ class_name CameraController
 @export var SPEED:float = 20.0
 @export var ZOOM_SPEED:float = 20.0  
 @export var ZOOM_MARGIN:float = 0.1
-@export var ZOOM_MIN:float = 0.5
-@export var ZOOM_MAX:float = 1.0
+@export var ZOOM_MIN:float = 1.0
+@export var ZOOM_MAX:float = 2.5
 
 
 var mousePos = Vector2()
@@ -22,10 +22,10 @@ var zoomPos = Vector2()
 var zooming = false
 
 var shake_intensity:float = 0.0
-var shake_duration:float = 0.0
 var should_shake:bool = false
 
 var timer = Timer.new()
+var timer_wait_time = 0.2
 
 var target = Vector2.ZERO
 var camera: Camera2D
@@ -34,7 +34,7 @@ var camera: Camera2D
 func initialize(target_camera:Camera2D):
 	camera = target_camera
 	add_child(timer)
-	timer.wait_time = 0.5
+	timer.wait_time = timer_wait_time
 	timer.one_shot = true
 
 
@@ -51,6 +51,13 @@ func set_bottom_limit(bottom_limit):
 
 func set_camera_position(position:Vector2):
 	camera.position = position
+
+
+func move_camera_to(position):
+	var tween = create_tween()
+	tween.parallel().tween_property(camera, "zoom", Vector2(2, 2) ,0.8).set_ease(Tween.EASE_OUT_IN)
+	tween.parallel().tween_property(camera, "position", position,0.8).set_ease(Tween.EASE_OUT_IN)
+	tween.play()
 
 
 func _input(event):
@@ -115,14 +122,12 @@ func handle_zoom(delta):
 	camera.zoom.y = clamp(camera.zoom.y, ZOOM_MIN, ZOOM_MAX)
 
 
-func shake_camera(intensity:float = 2.0, duration:float = 0.1):
+func shake_camera(intensity:float = 2.0):
 	shake_intensity = intensity
-	shake_duration = duration
 	should_shake = true
 
 
 func shake(delta):
-	shake_duration -= delta
 	if timer.time_left == 0:
 		timer.start()
 		if camera.offset == Vector2.ZERO:
@@ -130,4 +135,7 @@ func shake(delta):
 		if camera.offset == target:
 			target = Vector2.ZERO
 			should_shake = false
-		camera.offset = lerp(camera.offset, target, 1)
+		var tween = create_tween()
+		tween.tween_property(camera, "offset", target, timer_wait_time)
+		tween.play()
+		#camera.offset = lerp(camera.offset, target, 1)
