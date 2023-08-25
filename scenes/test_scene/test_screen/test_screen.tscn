@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://bjk32f1avr400"]
+[gd_scene load_steps=7 format=3 uid="uid://bjk32f1avr400"]
 
 [ext_resource type="Script" path="res://scenes/test_scene/test_screen/test_screen.gd" id="1_au1b5"]
 [ext_resource type="Script" path="res://scenes/test_scene/scripts/camera_controller.gd" id="2_arboi"]
 [ext_resource type="PackedScene" uid="uid://b0nlufewfa3hs" path="res://scenes/test_scene/test_screen/question.tscn" id="3_h4aqy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3a5l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ne7ci"]
 bg_color = Color(0.913725, 0.913725, 0.913725, 1)
@@ -21,9 +23,17 @@ script = ExtResource("1_au1b5")
 [node name="CameraController" type="Node2D" parent="."]
 script = ExtResource("2_arboi")
 
+[node name="LimitsContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(1920, 4096)
+offset_left = -630.0
+offset_top = -238.0
+offset_right = 1290.0
+offset_bottom = 1810.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_p3a5l")
+
 [node name="TestPanelContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(640, 0)
-offset_right = 40.0
+offset_right = 640.0
 offset_bottom = 40.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ne7ci")
 
@@ -86,4 +96,10 @@ layout_mode = 2
 text = "asdasdzxczvczvsdgsdgsxcbxcbxdgsxcbdxfgxbxcbsdxcvcxvsasdasdsadasdsadasdsadasdas"
 autowrap_mode = 1
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 180.0
+one_shot = true
+autostart = true
+
 [connection signal="resized" from="TestPanelContainer" to="." method="_on_test_panel_container_resized"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

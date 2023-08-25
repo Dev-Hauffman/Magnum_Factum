@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0nlufewfa3hs"]
+[gd_scene load_steps=4 format=3 uid="uid://b0nlufewfa3hs"]
 
 [ext_resource type="Script" path="res://scenes/test_scene/test_screen/question.gd" id="1_82gox"]
+[ext_resource type="StyleBox" uid="uid://b6q82eehgic7m" path="res://resources/question_underline.tres" id="2_4kkmf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_315wx"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -44,14 +45,14 @@ visible = false
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Label3" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
+[node name="Label3" type="RichTextLabel" parent="QuestionMarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
 text = "T"
 
 [node name="Label" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("2_4kkmf")
 text = "T"
 
 [node name="Label2" type="Label" parent="QuestionMarginContainer/VBoxContainer"]
@@ -83,3 +84,5 @@ text = "T"
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
 text = "T"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
