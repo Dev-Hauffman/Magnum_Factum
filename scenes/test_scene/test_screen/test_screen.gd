@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var questions:Array[QuestionInfo] = []
+var questions_info:Array[QuestionInfo] = []
 var final_score:float = 0
 var middle
 
@@ -40,11 +40,11 @@ func initialize(camera:Camera2D):
 
 func generate_questions():
 	var question_generator:QuestionGenerator = QuestionGenerator.new()
-	questions = question_generator.define_questions()
+	questions_info = question_generator.define_questions()
 
 
 func add_questions():
-	for entry in questions:
+	for entry in questions_info:
 		var question = preload("res://scenes/test_scene/test_screen/question.tscn").instantiate()
 		questions_container.add_child(question)
 		question.initialize(entry)
