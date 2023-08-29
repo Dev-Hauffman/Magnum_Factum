@@ -6,8 +6,8 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3a5l"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ne7ci"]
-bg_color = Color(0.913725, 0.913725, 0.913725, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n11qk"]
+bg_color = Color(0.91, 0.91, 0.91, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d5ajm"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -35,7 +35,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_p3a5l")
 custom_minimum_size = Vector2(300, 0)
 offset_right = 250.0
 offset_bottom = 40.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_ne7ci")
+theme_override_styles/panel = SubResource("StyleBoxFlat_n11qk")
 
 [node name="TestMarginContainer" type="MarginContainer" parent="TestPanelContainer"]
 layout_mode = 2
