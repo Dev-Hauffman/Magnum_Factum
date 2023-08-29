@@ -60,17 +60,17 @@ func initialize(content:QuestionInfo):
 	for question in content.paragraph:
 		var question_text:RichTextLabel = RichTextLabel.new()
 		content_container.add_child(question_text)
+		question_text.visible_characters = 0
 		question_text.fit_content = true
 		question_text.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
-		question_text.text = question
 		question_text.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		question_text.text = question
 		question_text.add_theme_constant_override("line_separation", 1) #avoid changing this
 		question_text.add_theme_font_override("normal_font", caveat_font)
 		question_text.add_theme_color_override("default_color", Color.BLACK)
 		question_text.add_theme_font_size_override("normal_font_size", 6)
 		await get_tree().create_timer(0.01).timeout # it's here because only in the next frame it updates the wrapping (from what I remember)
 		number_of_lines += question_text.get_line_count()
-		question_text.visible_characters = 0
 		paragraphs.append(question_text)
 		
 	for line in number_of_lines:
@@ -93,13 +93,14 @@ func initialize(content:QuestionInfo):
 	character_current_position = paragraphs[0].global_position
 	character_next_position = paragraphs[0].global_position
 	character_initial_position = paragraphs[0].global_position
-	current_height = character_initial_position.y
+	#current_height = character_initial_position.y
 	can_update_character_position = true
 
 
 func _process(delta):
 	if can_update_character_position and current_character != null:
 		current_character.global_position = character_current_position
+		#current_character.global_position.y = paragraphs[current_paragraph_index].global_position.y + current_height
 		#character_current_position.y = paragraphs[current_paragraph_index].global_position.y
 
 
@@ -122,8 +123,8 @@ func _on_gui_input(event):
 func update_character_position():
 	#get current letter and set current letter to the richlabel
 	var current_paragraph:RichTextLabel = paragraphs[current_paragraph_index]
-	#var paragraph_current_string = current_paragraph.text.substr(0, 5)
 	if current_letter >= current_paragraph.text.length():
+	#var paragraph_current_string = current_paragraph.text.substr(0, 5)
 		return
 	var paragraph_current_string = current_paragraph.text[current_letter]
 	current_character.text = paragraph_current_string
@@ -139,11 +140,10 @@ func update_character_position():
 		current_line += 1
 		character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
 		var line_separation = current_paragraph.get_theme_constant("line_separation")
-		#print_debug(line_separation)
 		var string_x_size = character_initial_position.x
 		var string_y_size = character_size.y
 		current_height += line_separation + string_y_size
-		character_next_position = Vector2(string_x_size, current_height)
+		character_next_position = Vector2(string_x_size, current_paragraph.global_position.y + current_height)
 		character_current_position = character_next_position
 		
 	elif paragraphs[current_paragraph_index].visible_ratio >= 1:
@@ -152,18 +152,19 @@ func update_character_position():
 		current_letter = 0
 		initial_letter = 0
 		character_initial_position = paragraphs[current_paragraph_index].global_position
-		character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
-		var line_separation = current_paragraph.get_theme_constant("line_separation")
-		var string_x_size = character_initial_position.x
-		var string_y_size = character_size.y
-		current_height += line_separation + string_y_size
-		character_next_position = Vector2(string_x_size, current_height)
+		#character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
+		#var line_separation = current_paragraph.get_theme_constant("line_separation")
+		#var string_x_size = character_initial_position.x
+		#var string_y_size = character_size.y
+		current_height = 0
+		character_next_position = character_initial_position
 		character_current_position = character_next_position
 		
 	else:
 		character_current_position = character_next_position
 		character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
 		character_next_position.x = character_initial_position.x + character_size.x
+		character_next_position.y = current_paragraph.global_position.y + current_height
 		current_letter_index += 1
 		current_letter += 1
 		
