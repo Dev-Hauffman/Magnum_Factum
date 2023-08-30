@@ -16,7 +16,7 @@ var style_box = load("res://resources/question_underline.tres")
 #var note_taker_font_2 = load("res://resources/fonts/note-taker.ttf")
 var caveat_font = load("res://resources/fonts/Caveat-VariableFont_wght.ttf")
 
-var visible_character_amout:int = 1
+var visible_character_amount:int = 5
 
 var current_character:RichTextLabel
 var character_current_position
@@ -71,7 +71,7 @@ func initialize(content:QuestionInfo):
 		#eliminate this
 		await get_tree().create_timer(0.01).timeout # it's here because only in the next frame it updates the wrapping (from what I remember)
 		number_of_lines += question_text.get_line_count()
-		question_text.visible_characters = 0
+		question_text.visible_characters = 0 # cannot be before "get_line_count()"
 		paragraphs.append(question_text)
 	#TO-DO: make its own method for this and called it next frame to eliminate timer
 	for line in number_of_lines:
@@ -109,39 +109,41 @@ func _on_gui_input(event):
 	if can_click:
 		if event is InputEventMouseButton and event.pressed and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT):
 			if current_paragraph_index < paragraphs.size():
-				paragraphs[current_paragraph_index].visible_characters += visible_character_amout
-				update_character_position()
 				emit_signal("clicked")
-				if paragraphs[current_paragraph_index].visible_ratio >= 1:
-					current_score += maximum_score / paragraphs.size()
-					current_paragraph_index += 1
-					print_debug(current_score)
-					if current_paragraph_index == paragraphs.size():
-						current_character.queue_free()
+				for i in visible_character_amount:
+					paragraphs[current_paragraph_index].visible_characters += 1
+					if paragraphs[current_paragraph_index].visible_ratio >= 1:
+						current_score += maximum_score / paragraphs.size()
+						update_character_position() #has to be before increase in current_paragraph_index or won't update
+						current_paragraph_index += 1
 						print_debug(current_score)
+						if current_paragraph_index == paragraphs.size():
+							current_character.queue_free()
+							print_debug(current_score)
+						break
+					else:
+						update_character_position()
 
 
 func update_character_position():
 	#get current letter and set current letter to the richlabel
+	
 	var current_paragraph:RichTextLabel = paragraphs[current_paragraph_index]
 	if current_letter >= current_paragraph.text.length():
-	#var paragraph_current_string = current_paragraph.text.substr(0, 5)
 		return
+	#var paragraph_current_string = current_paragraph.text.substr(current_letter, visible_character_amout)
 	var paragraph_current_string = current_paragraph.text[current_letter]
 	current_character.text = paragraph_current_string
 	#update to next position
 	var character_size:Vector2
-	#print_debug(current_paragraph.text.substr(initial_letter, current_letter_index + 1))
 	#print_debug("Initial letter: %d" % initial_letter)
 	
 	if current_paragraph.get_character_line(current_letter) > current_line:
-		print_debug("it's here now")
 		initial_letter = current_letter
 		current_letter_index = 0
 		current_letter += 1
 		current_line += 1
 		character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
-		print_debug(current_paragraph.text.substr(initial_letter, current_letter_index + 1))
 		var line_separation = current_paragraph.get_theme_constant("line_separation")
 		var string_x_size = character_initial_position.x
 		var string_y_size = character_size.y
@@ -156,28 +158,31 @@ func update_character_position():
 		current_letter_index += 1
 		
 	elif paragraphs[current_paragraph_index].visible_ratio >= 1:
-		character_current_position = character_next_position
-		#print_debug("now here")
+		print_debug("got here")
 		current_line = 0
 		current_letter_index = 0
 		current_letter = 0
 		initial_letter = 0
 		if current_paragraph_index + 1 < paragraphs.size():
-			character_initial_position = paragraphs[current_paragraph_index + 1].global_position
+			current_paragraph = paragraphs[current_paragraph_index + 1]
 		else:
-			character_initial_position = paragraphs[current_paragraph_index].global_position
+			current_paragraph = paragraphs[current_paragraph_index]
+		paragraph_current_string = current_paragraph.text[current_letter]
+		current_character.text = paragraph_current_string
+		
+		character_initial_position = current_paragraph.global_position
 		#character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
 		#var line_separation = current_paragraph.get_theme_constant("line_separation")
 		#var string_x_size = character_initial_position.x
 		#var string_y_size = character_size.y
 		current_height = 0
 		character_next_position = character_initial_position
+		character_current_position = character_next_position
 		
 	else:
-		#print_debug("it's here")
 		character_current_position = character_next_position
 		character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
-		print_debug(current_paragraph.text.substr(initial_letter, current_letter_index + 1))
+		#print_debug(current_paragraph.text.substr(initial_letter, current_letter_index + 1))
 		character_next_position.x = character_initial_position.x + character_size.x
 		character_next_position.y = current_paragraph.global_position.y + current_height
 		current_letter_index += 1
@@ -186,4 +191,4 @@ func update_character_position():
 	# TODO: 
 	# Last letter bfore paragraph is get in the wrong paragraph (done)
 	# second letter of new line is getting in wrong position (first letter position) (done)
-	# Wrong number of underlines
+	# Wrong number of underlines (done)
