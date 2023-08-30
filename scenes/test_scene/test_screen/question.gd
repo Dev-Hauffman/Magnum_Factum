@@ -16,7 +16,7 @@ var style_box = load("res://resources/question_underline.tres")
 #var note_taker_font_2 = load("res://resources/fonts/note-taker.ttf")
 var caveat_font = load("res://resources/fonts/Caveat-VariableFont_wght.ttf")
 
-var visible_character_amount:int = 5
+var visible_character_amount:int = 10
 
 var current_character:RichTextLabel
 var character_current_position
@@ -158,7 +158,7 @@ func update_character_position():
 		current_letter_index += 1
 		
 	elif paragraphs[current_paragraph_index].visible_ratio >= 1:
-		print_debug("got here")
+		character_current_position = character_next_position
 		current_line = 0
 		current_letter_index = 0
 		current_letter = 0
@@ -167,8 +167,8 @@ func update_character_position():
 			current_paragraph = paragraphs[current_paragraph_index + 1]
 		else:
 			current_paragraph = paragraphs[current_paragraph_index]
-		paragraph_current_string = current_paragraph.text[current_letter]
-		current_character.text = paragraph_current_string
+#		paragraph_current_string = current_paragraph.text[current_letter]
+#		current_character.text = paragraph_current_string
 		
 		character_initial_position = current_paragraph.global_position
 		#character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
@@ -177,12 +177,11 @@ func update_character_position():
 		#var string_y_size = character_size.y
 		current_height = 0
 		character_next_position = character_initial_position
-		character_current_position = character_next_position
 		
 	else:
 		character_current_position = character_next_position
 		character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
-		#print_debug(current_paragraph.text.substr(initial_letter, current_letter_index + 1))
+		print_debug(current_paragraph.text.substr(initial_letter, current_letter_index + 1))
 		character_next_position.x = character_initial_position.x + character_size.x
 		character_next_position.y = current_paragraph.global_position.y + current_height
 		current_letter_index += 1
