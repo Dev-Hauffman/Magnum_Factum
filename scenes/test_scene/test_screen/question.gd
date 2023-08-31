@@ -1,6 +1,7 @@
 extends PanelContainer
 
 signal clicked
+signal populated
 
 
 var maximum_score:float = 0
@@ -30,7 +31,8 @@ var can_update_character_position:bool = false
 var initial_letter:int = 0
 
 
-@onready var question_number = $QuestionMarginContainer/ContentContainer/NumberLabel
+@onready var question_number = $QuestionMarginContainer/ContentContainer/HBoxContainer/NumberLabel
+@onready var score_label = $QuestionMarginContainer/ContentContainer/HBoxContainer/ScoreLabel
 @onready var content_container = $QuestionMarginContainer/ContentContainer
 
 
@@ -41,6 +43,7 @@ var initial_letter:int = 0
 func initialize(content:QuestionInfo):
 	maximum_score = content.score
 	question_number.text = "Question " + str(content.number)
+	score_label.text = "(" + "Score: " + str(content.score) + ")"
 	
 	var margin:MarginContainer = MarginContainer.new()
 	add_child(margin)
@@ -73,6 +76,7 @@ func initialize(content:QuestionInfo):
 		number_of_lines += question_text.get_line_count()
 		question_text.visible_characters = 0 # cannot be before "get_line_count()"
 		paragraphs.append(question_text)
+	emit_signal("populated")
 	#TO-DO: make its own method for this and called it next frame to eliminate timer
 	for line in number_of_lines:
 		var filler_label:Label = Label.new()
@@ -181,7 +185,7 @@ func update_character_position():
 	else:
 		character_current_position = character_next_position
 		character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
-		print_debug(current_paragraph.text.substr(initial_letter, current_letter_index + 1))
+		#print_debug(current_paragraph.text.substr(initial_letter, current_letter_index + 1))
 		character_next_position.x = character_initial_position.x + character_size.x
 		character_next_position.y = current_paragraph.global_position.y + current_height
 		current_letter_index += 1

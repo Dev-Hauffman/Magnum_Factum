@@ -2,6 +2,10 @@ extends Node2D
 class_name CameraController
 
 
+signal moved_and_zoomed
+signal finished_moving
+
+
 @export var movement_speed: int = 20
 @export var drag_speed: int = 20
 
@@ -30,6 +34,9 @@ var timer_wait_time = 0.2
 var target = Vector2.ZERO
 var camera: Camera2D
 
+var can_move:bool = false
+var can_zoom:bool = false
+
 
 func initialize(target_camera:Camera2D):
 	camera = target_camera
@@ -49,15 +56,25 @@ func set_bottom_limit(bottom_limit):
 	camera.limit_bottom = bottom_limit
 
 
-func set_camera_position(position:Vector2):
-	camera.position = position
+func set_camera_position(target_position:Vector2):
+	camera.global_position = target_position
 
 
-func move_camera_to(position):
+func move_and_zoom(target_position:Vector2, zoom:Vector2):
 	var tween = create_tween()
-	tween.parallel().tween_property(camera, "zoom", Vector2(2, 2) ,0.8).set_ease(Tween.EASE_OUT_IN)
-	tween.parallel().tween_property(camera, "position", position,0.8).set_ease(Tween.EASE_OUT_IN)
+	tween.parallel().tween_property(camera, "zoom", zoom ,0.8).set_ease(Tween.EASE_OUT_IN)
+	tween.parallel().tween_property(camera, "position", target_position,0.8).set_ease(Tween.EASE_OUT_IN)
 	tween.play()
+	await tween.finished
+	emit_signal("moved_and_zoomed")
+
+
+func move_to(target_position:Vector2, speed:int):
+	var tween = create_tween()
+	tween.tween_property(camera, "position", target_position, speed).set_ease(Tween.EASE_OUT_IN)
+	tween.play()
+	await tween.finished
+	emit_signal("finished_moving")
 
 
 func _input(event):
@@ -84,8 +101,10 @@ func _input(event):
 
 
 func _process(delta):
-	handle_movement(delta)
-	handle_zoom(delta)
+	if can_move:
+		handle_movement(delta)
+	if can_zoom:
+		handle_zoom(delta)
 	if not zooming:
 		zoomFactor = 1.0
 	if should_shake:

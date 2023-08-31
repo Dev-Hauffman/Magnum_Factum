@@ -1,9 +1,13 @@
 extends Node2D
 
 
+signal initialized
+
+
 var questions_info:Array[QuestionInfo] = []
 var final_score:float = 0
 var middle
+var questions = []
 
 
 @onready var camera_controller:CameraController = $CameraController
@@ -19,9 +23,13 @@ func _ready():
 	#new_label.global_position = test_label.global_position
 	#new_label.add_theme_color_override("font_color", Color.BLACK)
 	#new_label.text = test_label.text
-	
+	await initialized
+	await get_tree().process_frame
+	await get_tree().create_timer(18.0).timeout
+	await show_questions()
+	camera_controller.can_move = true
+	camera_controller.can_zoom = true
 	#await get_tree().create_timer(0.01).timeout
-	pass
 
 
 func initialize(camera:Camera2D):
@@ -34,8 +42,8 @@ func initialize(camera:Camera2D):
 	var left_limit = limits.global_position.x
 	camera_controller.set_camera_limits(top_limit, right_limit, bottom_limit, left_limit)
 	generate_questions()
-	add_questions()
-	move_camera()
+	await add_questions()
+	emit_signal("initialized")
 
 
 func generate_questions():
@@ -49,12 +57,26 @@ func add_questions():
 		questions_container.add_child(question)
 		question.initialize(entry)
 		question.connect("clicked", Callable(self, "treat_question_click"))
+		questions.append(question)
+		await question.populated
 
 
-func move_camera():
-	var first_question = questions_container.get_child(0)
-	var height_middle = first_question.position.x + first_question.size.x/2
-	camera_controller.move_camera_to(Vector2(middle,height_middle))
+func show_questions():
+	var question = questions[0]
+	var height_middle = question.global_position.y + get_viewport_rect().size.y/4
+	camera_controller.move_and_zoom(Vector2(middle,height_middle), Vector2(2, 2))
+	await camera_controller.moved_and_zoomed
+	await get_tree().create_timer(1).timeout
+	for i in range(1, questions.size()):
+		question = questions[i]
+		height_middle = question.global_position.y + get_viewport_rect().size.y/4 # why 4? Because the screen is divide in 2 viewports, but you have to divide it by 2 to get their half (it doesn't matter if they're side by side or on top of each other)
+		camera_controller.move_to(Vector2(middle, height_middle), 1.0)
+		await camera_controller.finished_moving
+		await get_tree().create_timer(1).timeout
+	question = questions[0]
+	height_middle = question.global_position.y + get_viewport_rect().size.y/4
+	camera_controller.move_and_zoom(Vector2(middle,height_middle), Vector2(1, 1))
+	
 
 
 func treat_question_click():
