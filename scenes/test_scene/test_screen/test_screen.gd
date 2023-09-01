@@ -79,8 +79,10 @@ func show_questions():
 	
 
 
-func treat_question_click():
+func treat_question_click(position:Vector2):
 	camera_controller.shake_camera()
+	camera_controller.move_to(position, 1.0)
+	camera_controller.zoom(Vector2(2, 2))
 
 
 func _on_test_panel_container_resized():

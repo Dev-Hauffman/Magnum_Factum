@@ -1,6 +1,6 @@
 extends PanelContainer
 
-signal clicked
+signal clicked(leading_character_position)
 signal populated
 
 
@@ -17,7 +17,7 @@ var style_box = load("res://resources/question_underline.tres")
 #var note_taker_font_2 = load("res://resources/fonts/note-taker.ttf")
 var caveat_font = load("res://resources/fonts/Caveat-VariableFont_wght.ttf")
 
-var visible_character_amount:int = 10
+var visible_character_amount:int = 5
 
 var current_character:RichTextLabel
 var character_current_position
@@ -113,7 +113,7 @@ func _on_gui_input(event):
 	if can_click:
 		if event is InputEventMouseButton and event.pressed and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT):
 			if current_paragraph_index < paragraphs.size():
-				emit_signal("clicked")
+				emit_signal("clicked", current_character.global_position)
 				for i in visible_character_amount:
 					paragraphs[current_paragraph_index].visible_characters += 1
 					if paragraphs[current_paragraph_index].visible_ratio >= 1:

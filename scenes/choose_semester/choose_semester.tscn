@@ -1,0 +1,85 @@
+[gd_scene format=3 uid="uid://brq41vr28c1d4"]
+
+[node name="ChooseSemester" type="CanvasLayer"]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 640.0
+offset_bottom = 360.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="AvailableDisciplinesPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Available Disciplines"
+fit_content = true
+autowrap_mode = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Panel" type="PanelContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/Panel"]
+layout_mode = 2
+text = "Discipline"
+fit_content = true
+autowrap_mode = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "Level"
+fit_content = true
+autowrap_mode = 0
+
+[node name="CurrentDisciplinesPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Current Disciplines"
+fit_content = true
+autowrap_mode = 0

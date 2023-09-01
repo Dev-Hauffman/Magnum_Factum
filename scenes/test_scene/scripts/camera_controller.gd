@@ -69,12 +69,18 @@ func move_and_zoom(target_position:Vector2, zoom:Vector2):
 	emit_signal("moved_and_zoomed")
 
 
-func move_to(target_position:Vector2, speed:int):
+func move_to(target_position:Vector2, speed:float):
 	var tween = create_tween()
 	tween.tween_property(camera, "position", target_position, speed).set_ease(Tween.EASE_OUT_IN)
 	tween.play()
 	await tween.finished
 	emit_signal("finished_moving")
+
+
+func zoom(zoom:Vector2):
+	var tween = create_tween()
+	tween.parallel().tween_property(camera, "zoom", zoom ,0.8).set_ease(Tween.EASE_OUT_IN)
+	tween.play()
 
 
 func _input(event):
