@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://brq41vr28c1d4"]
+[gd_scene load_steps=5 format=3 uid="uid://brq41vr28c1d4"]
 
 [ext_resource type="Script" path="res://scenes/choose_semester/choose_semester_screen.gd" id="1_pjdyg"]
+[ext_resource type="Script" path="res://scenes/choose_semester/AvailableDisciplinesPanel.gd" id="2_lfa5k"]
+[ext_resource type="PackedScene" uid="uid://oiv4pf5wn5qq" path="res://scenes/choose_semester/semester_entry.tscn" id="2_ys15b"]
+[ext_resource type="Script" path="res://scenes/choose_semester/CurrentDisciplinesPanel.gd" id="4_a7lpr"]
 
 [node name="ChooseSemesterScreen" type="CanvasLayer"]
 script = ExtResource("1_pjdyg")
@@ -11,15 +14,17 @@ offset_bottom = 360.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/margin_left = 40
-theme_override_constants/margin_top = 40
+theme_override_constants/margin_top = 70
 theme_override_constants/margin_right = 40
 theme_override_constants/margin_bottom = 40
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+alignment = 1
 
 [node name="AvailableDisciplinesPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+script = ExtResource("2_lfa5k")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel"]
 layout_mode = 2
@@ -31,41 +36,58 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer"]
+[node name="AvailableDisciplinesLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 0
 text = "Available Disciplines"
 fit_content = true
 autowrap_mode = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer"]
+[node name="TableInfoContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/TableInfoContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/TableInfoContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/TableInfoContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_font_sizes/normal_font_size = 0
 text = "Discipline"
 fit_content = true
 autowrap_mode = 0
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/TableInfoContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(41, 23)
 layout_mode = 2
 size_flags_horizontal = 0
+theme_override_font_sizes/normal_font_size = 0
 text = "Level"
 fit_content = true
 autowrap_mode = 0
 
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="AvailableDisciplinesList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="EntryPanelContainer" parent="MarginContainer/HBoxContainer/AvailableDisciplinesPanel/MarginContainer/VBoxContainer/ScrollContainer/AvailableDisciplinesList" instance=ExtResource("2_ys15b")]
+visible = false
+layout_mode = 2
+
 [node name="CurrentDisciplinesPanel" type="PanelContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+script = ExtResource("4_a7lpr")
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel"]
 layout_mode = 2
@@ -77,34 +99,65 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer"]
+[node name="CurrentDisciplinesLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "Current Disciplines"
 fit_content = true
 autowrap_mode = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer"]
+[node name="TableInfoContainer" type="PanelContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer/TableInfoContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer/TableInfoContainer/MarginContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer/TableInfoContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 1
 text = "Discipline"
 fit_content = true
 autowrap_mode = 0
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer/PanelContainer/MarginContainer/HBoxContainer"]
+[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer/TableInfoContainer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 1
 text = "Level"
 fit_content = true
 autowrap_mode = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="CurrentDisciplinesList" type="VBoxContainer" parent="MarginContainer/HBoxContainer/CurrentDisciplinesPanel/MarginContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="."]
+offset_left = 151.0
+offset_top = 12.0
+offset_right = 498.0
+offset_bottom = 57.0
+theme_override_font_sizes/font_size = 30
+text = "CHOOSE YOUR DESTINY"
+
+[node name="Button" type="Button" parent="."]
+offset_left = 538.0
+offset_top = 297.0
+offset_right = 625.0
+offset_bottom = 351.0
+text = "START
+SEMESTER"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

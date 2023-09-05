@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://dmtpb588e8lng"]
+[gd_scene load_steps=6 format=3 uid="uid://dmtpb588e8lng"]
 
+[ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_5li3y"]
 [ext_resource type="Texture2D" uid="uid://y0sigk7vxpvv" path="res://resources/game tittle screen.png" id="1_v4onv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sj31n"]
@@ -8,13 +9,17 @@ bg_color = Color(0.886275, 0.866667, 0.0901961, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2dki"]
 bg_color = Color(0.956863, 0.431373, 0.121569, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tfcfs"]
+bg_color = Color(0.886275, 0.866667, 0.0901961, 1)
+
 [node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_5li3y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(320, 180)
 texture = ExtResource("1_v4onv")
 
-[node name="Button" type="Button" parent="."]
+[node name="StartGameButton" type="Button" parent="."]
 offset_left = 27.0
 offset_top = 268.0
 offset_right = 123.0
@@ -23,3 +28,16 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_sj31n")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_j2dki")
 text = "Start Game"
+
+[node name="ExitGameButton" type="Button" parent="."]
+custom_minimum_size = Vector2(96, 31)
+offset_left = 514.0
+offset_top = 269.0
+offset_right = 610.0
+offset_bottom = 300.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_tfcfs")
+text = "Exit Game"
+
+[connection signal="pressed" from="StartGameButton" to="." method="_on_start_game_button_pressed"]
+[connection signal="pressed" from="ExitGameButton" to="." method="_on_exit_game_button_pressed"]

@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://oiv4pf5wn5qq"]
+
+[ext_resource type="Script" path="res://scenes/choose_semester/semester_entry.gd" id="1_njo3v"]
+
+[node name="EntryPanelContainer" type="PanelContainer"]
+script = ExtResource("1_njo3v")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DisciplineName" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(102, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 8
+text = "Computability and Complexity Theory"
+fit_content = true
+scroll_active = false
+autowrap_mode = 2
+
+[node name="DisciplineLevel" type="RichTextLabel" parent="MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(41, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 10
+bbcode_enabled = true
+text = "[center]6[/center]"
+fit_content = true
