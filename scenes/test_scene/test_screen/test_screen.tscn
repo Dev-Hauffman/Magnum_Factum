@@ -29,12 +29,14 @@ offset_left = -488.0
 offset_top = -98.0
 offset_right = 792.0
 offset_bottom = 1182.0
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_p3a5l")
 
 [node name="TestPanelContainer" type="PanelContainer" parent="."]
 custom_minimum_size = Vector2(300, 0)
 offset_right = 250.0
 offset_bottom = 40.0
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_n11qk")
 
 [node name="TestMarginContainer" type="MarginContainer" parent="TestPanelContainer"]

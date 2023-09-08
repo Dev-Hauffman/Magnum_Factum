@@ -7,11 +7,16 @@ signal populated
 var maximum_score:float = 0
 var current_score:float = 0
 var paragraphs:Array[RichTextLabel] = []
+var confidence_levels:Array = []
 var current_paragraph_index:int = 0
 var can_click:bool = true
 var margin_value:int = 8
+var show_confidence:bool = false
 
 var style_box = load("res://resources/question_underline.tres")
+var green_box = load("res://resources/paragraph_green_selection.tres")
+var yellow_box = load("res://resources/paragraph_yellow_selection.tres")
+var red_box = load("res://resources/paragraph_red_selection.tres")
 #var notepen_font = load("res://resources/fonts/Notepen.ttf")
 #var note_taker_font_1 = load("res://resources/fonts/note-taker.otf")
 #var note_taker_font_2 = load("res://resources/fonts/note-taker.ttf")
@@ -47,6 +52,7 @@ func initialize(content:QuestionInfo):
 	
 	var margin:MarginContainer = MarginContainer.new()
 	add_child(margin)
+	margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	margin.add_theme_constant_override("margin_left", margin_value)
 	margin.add_theme_constant_override("margin_top", margin_value)
 	margin.add_theme_constant_override("margin_right", margin_value)
@@ -54,12 +60,15 @@ func initialize(content:QuestionInfo):
 	
 	var underlines:VBoxContainer = VBoxContainer.new()
 	margin.add_child(underlines)
+	underlines.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	var extra_space:Label = Label.new()
 	underlines.add_child(extra_space)
+	extra_space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	extra_space.add_theme_font_size_override("font_size", 9) #test/ mess around with this # bottom width = 1, font size = 16
 	
 	var number_of_lines:int = 0
+	var counter:int = 0
 	for question in content.paragraph:
 		var question_text:RichTextLabel = RichTextLabel.new()
 		content_container.add_child(question_text)
@@ -71,20 +80,25 @@ func initialize(content:QuestionInfo):
 		question_text.add_theme_font_override("normal_font", caveat_font)
 		question_text.add_theme_color_override("default_color", Color.BLACK)
 		question_text.add_theme_font_size_override("normal_font_size", 6)
+		question_text.mouse_filter = Control.MOUSE_FILTER_PASS
+		question_text.connect("mouse_entered", Callable(self, "show_paragraph_confidence").bind(question_text, counter))
+		question_text.connect("mouse_exited", Callable(self, "hide_paragraph_confidence").bind(question_text))
 		#eliminate this
 		await get_tree().create_timer(0.01).timeout # it's here because only in the next frame it updates the wrapping (from what I remember)
 		number_of_lines += question_text.get_line_count()
 		question_text.visible_characters = 0 # cannot be before "get_line_count()"
 		paragraphs.append(question_text)
+		counter += 1
 	emit_signal("populated")
 	#TO-DO: make its own method for this and called it next frame to eliminate timer
 	for line in number_of_lines:
-		var filler_label:Label = Label.new()
-		underlines.add_child(filler_label)
-		filler_label.add_theme_font_size_override("font_size", 3) #test/ mess around with this # bottom width = 1, font size = 16
-		filler_label.add_theme_constant_override("line_spacing", 3) #avoid changing this
-		filler_label.add_theme_font_override("font", caveat_font)
-		filler_label.add_theme_stylebox_override("normal", style_box)
+		var underline_label:Label = Label.new() 
+		underlines.add_child(underline_label)
+		underline_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		underline_label.add_theme_font_size_override("font_size", 3) #test/ mess around with this # bottom width = 1, font size = 16
+		underline_label.add_theme_constant_override("line_spacing", 3) #avoid changing this
+		underline_label.add_theme_font_override("font", caveat_font)
+		underline_label.add_theme_stylebox_override("normal", style_box)
 	#TO-DO: make its own method for this and called it next frame to eliminate timer
 	current_character = RichTextLabel.new()
 	add_child(current_character)
@@ -107,6 +121,23 @@ func _process(delta):
 		current_character.global_position = character_current_position
 		#current_character.global_position.y = paragraphs[current_paragraph_index].global_position.y + current_height
 		#character_current_position.y = paragraphs[current_paragraph_index].global_position.y
+	for confidence_label in confidence_levels:
+		confidence_label[0].global_position = confidence_label[1]
+
+
+func show_paragraph_confidence(target:RichTextLabel, index:int):
+	if show_confidence:
+		var paragraph_confidence_level:int = int(confidence_levels[index][0].text)
+		if paragraph_confidence_level >= 70:
+			target.add_theme_stylebox_override("normal", green_box)
+		elif paragraph_confidence_level >= 40:
+			target.add_theme_stylebox_override("normal", yellow_box)
+		else:
+			target.add_theme_stylebox_override("normal", red_box)
+
+
+func hide_paragraph_confidence(target:RichTextLabel):
+	target.remove_theme_stylebox_override("normal")
 
 
 func _on_gui_input(event):
@@ -118,11 +149,13 @@ func _on_gui_input(event):
 					paragraphs[current_paragraph_index].visible_characters += 1
 					if paragraphs[current_paragraph_index].visible_ratio >= 1:
 						current_score += maximum_score / paragraphs.size()
+						create_confidence_value()
 						update_character_position() #has to be before increase in current_paragraph_index or won't update
 						current_paragraph_index += 1
 						print_debug(current_score)
 						if current_paragraph_index == paragraphs.size():
-							current_character.queue_free()
+							show_confidence = true
+							current_character.visible = false
 							print_debug(current_score)
 						break
 					else:
@@ -190,8 +223,21 @@ func update_character_position():
 		character_next_position.y = current_paragraph.global_position.y + current_height
 		current_letter_index += 1
 		current_letter += 1
-		
-	# TODO: 
-	# Last letter bfore paragraph is get in the wrong paragraph (done)
-	# second letter of new line is getting in wrong position (first letter position) (done)
-	# Wrong number of underlines (done)
+
+
+func create_confidence_value():
+	var confidence_value:int = generate_confidence_value()
+	var confidence_array:Array = []
+	var confidence_label:Label = Label.new()
+	confidence_label.add_theme_font_size_override("font_size", 5)
+	confidence_label.text ="confidence: " + str(confidence_value) + "%"
+	confidence_label.add_theme_color_override("font_color", Color.DARK_GREEN)
+	add_child(confidence_label)
+	confidence_array.append(confidence_label)
+	confidence_array.append(current_character.global_position + Vector2(8, 0))
+	confidence_levels.append(confidence_array)
+
+
+func generate_confidence_value() -> int:
+	var confidence_value:int = (randi_range(10, 109) / 10) * 10
+	return confidence_value

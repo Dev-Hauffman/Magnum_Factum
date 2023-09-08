@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0nlufewfa3hs"]
+[gd_scene load_steps=6 format=3 uid="uid://b0nlufewfa3hs"]
 
 [ext_resource type="Script" path="res://scenes/test_scene/test_screen/question.gd" id="1_82gox"]
 [ext_resource type="FontFile" uid="uid://cwtp0hj24ukhe" path="res://resources/fonts/Notepen.ttf" id="2_3h3w4"]
 [ext_resource type="StyleBox" uid="uid://b6q82eehgic7m" path="res://resources/question_underline.tres" id="2_4kkmf"]
+[ext_resource type="StyleBox" uid="uid://cmaorruy3ofot" path="res://resources/paragraph_yellow_selection.tres" id="3_suv6m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_315wx"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -15,6 +16,7 @@ border_color = Color(0, 0, 0, 1)
 [node name="QuestionContainer" type="PanelContainer"]
 offset_right = 128.0
 offset_bottom = 557.0
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_315wx")
 script = ExtResource("1_82gox")
 
@@ -58,6 +60,7 @@ autowrap_mode = 0
 visible = false
 texture_filter = 1
 layout_mode = 2
+mouse_filter = 0
 theme_override_constants/line_spacing = 2
 theme_override_fonts/font = ExtResource("2_3h3w4")
 theme_override_font_sizes/font_size = 10
@@ -67,11 +70,14 @@ autowrap_mode = 1
 [node name="VBoxContainer" type="VBoxContainer" parent="QuestionMarginContainer"]
 visible = false
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="Label3" type="RichTextLabel" parent="QuestionMarginContainer/VBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 11
+theme_override_styles/normal = ExtResource("3_suv6m")
 text = "T"
 fit_content = true
 

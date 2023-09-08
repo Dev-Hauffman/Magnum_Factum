@@ -25,11 +25,10 @@ func _ready():
 	#new_label.text = test_label.text
 	await initialized
 	await get_tree().process_frame
-	await get_tree().create_timer(18.0).timeout
-	await show_questions()
+	#await get_tree().create_timer(18.0).timeout
+	#await show_questions()
 	camera_controller.can_move = true
 	camera_controller.can_zoom = true
-	#await get_tree().create_timer(0.01).timeout
 
 
 func initialize(camera:Camera2D):
@@ -54,6 +53,7 @@ func generate_questions():
 func add_questions():
 	for entry in questions_info:
 		var question = preload("res://scenes/test_scene/test_screen/question.tscn").instantiate()
+		question.mouse_filter = Control.MOUSE_FILTER_PASS
 		questions_container.add_child(question)
 		question.initialize(entry)
 		question.connect("clicked", Callable(self, "treat_question_click"))

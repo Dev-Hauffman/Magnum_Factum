@@ -1,6 +1,9 @@
 extends CanvasLayer
 
 
+signal disciplines_chosen(available_disciplines, current_disciplines)
+
+
 var available_disciplines:Array = []
 var current_disciplines:Array = []
 
@@ -90,9 +93,10 @@ func find_index(search_item, array:Array) -> int:
 
 
 func _on_button_pressed():
-	print_debug("current_disciplines:")
-	for current in current_disciplines:
-		print(current[0] + current[1])
-	print_debug("available_disciplines:")
-	for available in available_disciplines:
-		print(available[0] + available[1])
+	emit_signal("disciplines_chosen",available_disciplines, current_disciplines)
+#	print_debug("current_disciplines:")
+#	for current in current_disciplines:
+#		print(current[0] + current[1])
+#	print_debug("available_disciplines:")
+#	for available in available_disciplines:
+#		print(available[0] + available[1])
