@@ -20,3 +20,11 @@ const existing_disciplines:Array = [
 
 static func get_existing_disciplines() -> Array:
 	return existing_disciplines
+
+
+static func get_discipline_by_semester(semester:int) -> Array[String]:
+	var result:Array[String] = []
+	for discipline in existing_disciplines:
+		if discipline[1] == str(semester):
+			result.append(discipline[0])
+	return result

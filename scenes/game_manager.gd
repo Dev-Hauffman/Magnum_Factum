@@ -5,6 +5,7 @@ var choose_semester_scene
 
 var available_disciplines:Array = []
 var current_disciplines:Dictionary = {}
+var current_semester:int = 1
 
 
 func _ready():

@@ -82,7 +82,7 @@ func initialize(content:QuestionInfo):
 		question_text.add_theme_font_size_override("normal_font_size", 6)
 		question_text.mouse_filter = Control.MOUSE_FILTER_PASS
 		question_text.connect("mouse_entered", Callable(self, "show_paragraph_confidence").bind(question_text, counter))
-		question_text.connect("mouse_exited", Callable(self, "hide_paragraph_confidence").bind(question_text))
+		question_text.connect("mouse_exited", Callable(self, "hide_paragraph_confidence").bind(question_text, counter))
 		#eliminate this
 		await get_tree().create_timer(0.01).timeout # it's here because only in the next frame it updates the wrapping (from what I remember)
 		number_of_lines += question_text.get_line_count()
@@ -127,17 +127,24 @@ func _process(delta):
 
 func show_paragraph_confidence(target:RichTextLabel, index:int):
 	if show_confidence:
-		var paragraph_confidence_level:int = int(confidence_levels[index][0].text)
+		var confidence_label = confidence_levels[index][0]
+		var paragraph_confidence_level:int = int(confidence_label.text)
+		confidence_label.visible = true
 		if paragraph_confidence_level >= 70:
 			target.add_theme_stylebox_override("normal", green_box)
+			confidence_label.add_theme_color_override("font_color", Color.DARK_GREEN)
 		elif paragraph_confidence_level >= 40:
 			target.add_theme_stylebox_override("normal", yellow_box)
+			confidence_label.add_theme_color_override("font_color", Color.YELLOW)
 		else:
 			target.add_theme_stylebox_override("normal", red_box)
+			confidence_label.add_theme_color_override("font_color", Color.FIREBRICK)
 
 
-func hide_paragraph_confidence(target:RichTextLabel):
-	target.remove_theme_stylebox_override("normal")
+func hide_paragraph_confidence(target:RichTextLabel, index:int):
+	if show_confidence:
+		target.remove_theme_stylebox_override("normal")
+		confidence_levels[index][0].visible = false
 
 
 func _on_gui_input(event):
@@ -227,14 +234,18 @@ func update_character_position():
 
 func create_confidence_value():
 	var confidence_value:int = generate_confidence_value()
-	var confidence_array:Array = []
+	var confidence_array:Array = [] # confidence info as a dictionary?
 	var confidence_label:Label = Label.new()
-	confidence_label.add_theme_font_size_override("font_size", 5)
+	confidence_label.add_theme_font_size_override("font_size", 6)
 	confidence_label.text ="confidence: " + str(confidence_value) + "%"
-	confidence_label.add_theme_color_override("font_color", Color.DARK_GREEN)
+	confidence_label.add_theme_color_override("font_outline_color", Color.BLACK)
+	confidence_label.add_theme_constant_override("outline_size", 3)
+	confidence_label.visible = false
 	add_child(confidence_label)
 	confidence_array.append(confidence_label)
-	confidence_array.append(current_character.global_position + Vector2(8, 0))
+	var value_position_x = paragraphs[current_paragraph_index].global_position.x + paragraphs[current_paragraph_index].get_rect().size.x/2 - confidence_label.get_rect().size.x/2
+	var value_position_y = paragraphs[current_paragraph_index].global_position.y + paragraphs[current_paragraph_index].get_rect().size.y/2 - confidence_label.get_rect().size.y/2
+	confidence_array.append(Vector2(value_position_x, value_position_y))
 	confidence_levels.append(confidence_array)
 
 
