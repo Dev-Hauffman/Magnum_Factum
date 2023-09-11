@@ -36,17 +36,22 @@ func populate_questions(questions:Array[QuestionInfo]) -> Array[QuestionInfo]:
 	for question in questions:
 		match question.difficulty:
 			"Very easy":
-				question.paragraph.append(QuestionPhrases.choose_phrase())
+				var paragraph_info:Dictionary = QuestionPhrases.choose_phrase()
+				question.paragraph.append(paragraph_info)
 			"Easy":
 				for i in range(2):
-					question.paragraph.append(QuestionPhrases.choose_phrase())
+					var paragraph_info:Dictionary = QuestionPhrases.choose_phrase()
+					question.paragraph.append(paragraph_info)
 			"Medium":
 				for i in range(4):
-					question.paragraph.append(QuestionPhrases.choose_phrase())
+					var paragraph_info:Dictionary = QuestionPhrases.choose_phrase()
+					question.paragraph.append(paragraph_info)
 			"Hard":
 				for i in range(8):
-					question.paragraph.append(QuestionPhrases.choose_phrase())
+					var paragraph_info:Dictionary = QuestionPhrases.choose_phrase()
+					question.paragraph.append(paragraph_info)
 			"Very hard":
 				for i in range(10):
-					question.paragraph.append(QuestionPhrases.choose_phrase())
+					var paragraph_info:Dictionary = QuestionPhrases.choose_phrase()
+					question.paragraph.append(paragraph_info)
 	return questions

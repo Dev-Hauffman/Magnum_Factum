@@ -76,7 +76,6 @@ func move_to(target_position:Vector2, speed:float):
 		if move_tween.is_running():
 			move_tween.stop()
 	move_tween = create_tween()
-	print_debug(move_tween.is_running())
 	move_tween.tween_property(camera, "position", target_position, speed).set_ease(Tween.EASE_OUT_IN)
 	move_tween.play()
 	await move_tween.finished
@@ -122,7 +121,6 @@ func _process(delta):
 	if should_shake:
 		shake(delta)
 	if player_moved:
-		print_debug("stopping tween")
 		move_tween.stop()
 		player_moved = false
 
@@ -149,7 +147,6 @@ func handle_movement(delta):
 			camera.position = lerp(camera.position, camera.position + final_position, drag_speed * delta)
 	
 	if inputX != 0 or inputY != 0 or Input.is_action_just_pressed("pan_button"):
-		print_debug("player moved")
 		player_moved = true
 
 

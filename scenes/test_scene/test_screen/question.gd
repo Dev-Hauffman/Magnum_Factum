@@ -7,6 +7,7 @@ signal populated
 var maximum_score:float = 0
 #var current_score:float = 0
 var paragraphs:Array[RichTextLabel] = []
+var paragraph_sizes:Array[int] =[]
 var paragraph_info:Array = []
 var current_paragraph_index:int = 0
 var can_click:bool = true
@@ -78,7 +79,7 @@ func initialize(content:QuestionInfo):
 		question_text.fit_content = true
 		question_text.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
 		question_text.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		question_text.text = question
+		question_text.text = question["phrase"]
 		question_text.add_theme_constant_override("line_separation", 1) #avoid changing this
 		question_text.add_theme_font_override("normal_font", caveat_font)
 		question_text.add_theme_color_override("default_color", Color.BLACK)
@@ -93,6 +94,7 @@ func initialize(content:QuestionInfo):
 		question_text.visible_characters_behavior = TextServer.VC_CHARS_AFTER_SHAPING
 		question_text.visible_characters = 0 # cannot be before "get_line_count()"
 		paragraphs.append(question_text)
+		paragraph_sizes.append(question["size"])
 		counter += 1
 	emit_signal("populated")
 	#TO-DO: make its own method for this and called it next frame to eliminate timer
@@ -162,6 +164,7 @@ func rewrite_paragraph(event, target:RichTextLabel, index:int):
 					paragraph_info[index]["can_rewrite"] = true
 					#current_score -= maximum_score / paragraphs.size()
 					target.visible_characters = 0
+					target.text = QuestionPhrases.choose_phrase_by_size(paragraph_sizes[index])
 					current_character.visible = true
 					current_paragraph_index = index
 					current_letter = 0
