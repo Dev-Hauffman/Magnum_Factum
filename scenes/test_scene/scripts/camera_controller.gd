@@ -36,6 +36,8 @@ var camera: Camera2D
 
 var can_move:bool = false
 var can_zoom:bool = false
+var player_moved:bool = false
+var move_tween:Tween
 
 
 func initialize(target_camera:Camera2D):
@@ -70,10 +72,14 @@ func move_and_zoom(target_position:Vector2, zoom:Vector2):
 
 
 func move_to(target_position:Vector2, speed:float):
-	var tween = create_tween()
-	tween.tween_property(camera, "position", target_position, speed).set_ease(Tween.EASE_OUT_IN)
-	tween.play()
-	await tween.finished
+	if move_tween != null:
+		if move_tween.is_running():
+			move_tween.stop()
+	move_tween = create_tween()
+	print_debug(move_tween.is_running())
+	move_tween.tween_property(camera, "position", target_position, speed).set_ease(Tween.EASE_OUT_IN)
+	move_tween.play()
+	await move_tween.finished
 	emit_signal("finished_moving")
 
 
@@ -115,6 +121,10 @@ func _process(delta):
 		zoomFactor = 1.0
 	if should_shake:
 		shake(delta)
+	if player_moved:
+		print_debug("stopping tween")
+		move_tween.stop()
+		player_moved = false
 
 
 func handle_movement(delta):
@@ -137,6 +147,10 @@ func handle_movement(delta):
 			mouse_final_position = get_global_mouse_position()
 			var final_position:Vector2 = mouse_initial_position - mouse_final_position
 			camera.position = lerp(camera.position, camera.position + final_position, drag_speed * delta)
+	
+	if inputX != 0 or inputY != 0 or Input.is_action_just_pressed("pan_button"):
+		print_debug("player moved")
+		player_moved = true
 
 
 func handle_zoom(delta):

@@ -94,5 +94,7 @@ func _on_timer_timeout():
 	for children in questions_container.get_children():
 		if children.visible == true:
 			children.can_click = false
-			final_score += children.current_score
+			children.can_reset = false
+			children.can_show = false
+			final_score += children.get_score()
 	print_debug("final score: " + str(final_score))

@@ -5,7 +5,7 @@ signal populated
 
 
 var maximum_score:float = 0
-var current_score:float = 0
+#var current_score:float = 0
 var paragraphs:Array[RichTextLabel] = []
 var paragraph_info:Array = []
 var current_paragraph_index:int = 0
@@ -14,6 +14,7 @@ var margin_value:int = 8
 var finished_question:bool = false
 var can_reset:bool = false
 var can_show:bool = false
+var time_is_up:bool = false
 
 var style_box = load("res://resources/question_underline.tres")
 var green_box = load("res://resources/paragraph_green_selection.tres")
@@ -130,7 +131,7 @@ func _process(delta):
 
 
 func show_paragraph_confidence(target:RichTextLabel, index:int):
-	if finished_question:
+	if finished_question and not time_is_up:
 		if can_show and paragraph_info[index]["can_rewrite"] == false:
 			var confidence_label = paragraph_info[index]["label"]
 			var paragraph_confidence_level:int = int(confidence_label.text)
@@ -153,13 +154,13 @@ func hide_paragraph_confidence(target:RichTextLabel, index:int):
 
 
 func rewrite_paragraph(event, target:RichTextLabel, index:int):
-	if finished_question:
+	if finished_question and not time_is_up:
 		if event is InputEventMouseButton and event.pressed and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT):
 			if can_reset and int(paragraph_info[index]["label"].text) < 100:
 				if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
 					can_reset = false
 					paragraph_info[index]["can_rewrite"] = true
-					current_score -= maximum_score / paragraphs.size()
+					#current_score -= maximum_score / paragraphs.size()
 					target.visible_characters = 0
 					current_character.visible = true
 					current_paragraph_index = index
@@ -181,9 +182,9 @@ func rewrite_paragraph(event, target:RichTextLabel, index:int):
 						can_show = true
 						current_character.visible = false
 						paragraph_info[index]["can_rewrite"] = false
-						current_score += maximum_score / paragraphs.size()
+						#current_score += maximum_score / paragraphs.size()
 						recalculate_confidence(index)
-						print_debug("final score: " + str(current_score))
+						#print_debug("final score: " + str(current_score))
 						await get_tree().create_timer(1).timeout #this represent the animation playing before being able to review a question
 						can_reset = true
 						break
@@ -211,29 +212,30 @@ func recalculate_confidence(index:int):
 	var result = regex.search(paragraph_info[index]["label"].text)
 	var base_value = result.get_string()
 	var confidence_value:int = generate_confidence_value(int(base_value))
-	print_debug(confidence_value)
+	paragraph_info[index]["confidence_value"] = confidence_value
+	print_debug(paragraph_info[index]["confidence_value"])
 	paragraph_info[index]["label"].text = "confidence: " + str(confidence_value) + "%"
 
 
 func _on_gui_input(event):
-	if can_click:
+	if can_click and not time_is_up:
 		if event is InputEventMouseButton and event.pressed and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT):
 			if current_paragraph_index < paragraphs.size():
 				emit_signal("clicked", current_character.global_position)
 				for i in visible_character_amount:
 					paragraphs[current_paragraph_index].visible_characters += 1
 					if paragraphs[current_paragraph_index].visible_ratio >= 1:
-						current_score += maximum_score / paragraphs.size()
+						#current_score += maximum_score / paragraphs.size()
 						create_confidence_value()
 						update_character_position() #has to be before increase in current_paragraph_index or won't update
 						current_paragraph_index += 1
-						print_debug(current_score)
+						#print_debug(current_score)
 						if current_paragraph_index == paragraphs.size():
 							finished_question = true
 							can_show = true
 							can_click = false
 							current_character.visible = false
-							print_debug(current_score)
+							#print_debug(current_score)
 							await get_tree().create_timer(1).timeout #this represent the animation playing before being able to review a question
 							can_reset = true
 						break
@@ -315,8 +317,9 @@ func set_current_character_next_position(character_size:Vector2, current_paragra
 
 
 func create_confidence_value():
+	var confidence_dict:Dictionary = {}
 	var confidence_value:int = generate_confidence_value()
-	var confidence_dict:Dictionary = {} # confidence info as a dictionary?
+	confidence_dict["confidence_value"] = confidence_value
 	var confidence_label:Label = Label.new()
 	confidence_label.add_theme_font_size_override("font_size", 6)
 	confidence_label.text ="confidence: " + str(confidence_value) + "%"
@@ -336,3 +339,15 @@ func create_confidence_value():
 func generate_confidence_value(base_value:int = 10) -> int:
 	var confidence_value:int = (randi_range(base_value, 109) / 10) * 10
 	return confidence_value
+
+
+func get_score() -> float:
+	var score:float = 0
+	for confidence_value in paragraph_info:
+		var random_value = randi_range(0, 100)
+		print_debug("random value is: " + str(random_value))
+		print_debug("confidence value is: " + str(confidence_value["confidence_value"]))
+		if random_value <= confidence_value["confidence_value"]:
+			score += maximum_score / paragraphs.size()
+			print_debug("score is now: %f" % score)
+	return score

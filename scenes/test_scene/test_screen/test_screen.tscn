@@ -99,7 +99,7 @@ text = "asdasdzxczvczvsdgsdgsxcbxcbxdgsxcbdxfgxbxcbsdxcvcxvsasdasdsadasdsadasdsa
 autowrap_mode = 1
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 180.0
+wait_time = 90.0
 one_shot = true
 autostart = true
 
