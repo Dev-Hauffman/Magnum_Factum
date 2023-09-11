@@ -7,11 +7,13 @@ signal populated
 var maximum_score:float = 0
 var current_score:float = 0
 var paragraphs:Array[RichTextLabel] = []
-var confidence_levels:Array = []
+var paragraph_info:Array = []
 var current_paragraph_index:int = 0
 var can_click:bool = true
 var margin_value:int = 8
-var show_confidence:bool = false
+var finished_question:bool = false
+var can_reset:bool = false
+var can_show:bool = false
 
 var style_box = load("res://resources/question_underline.tres")
 var green_box = load("res://resources/paragraph_green_selection.tres")
@@ -83,9 +85,11 @@ func initialize(content:QuestionInfo):
 		question_text.mouse_filter = Control.MOUSE_FILTER_PASS
 		question_text.connect("mouse_entered", Callable(self, "show_paragraph_confidence").bind(question_text, counter))
 		question_text.connect("mouse_exited", Callable(self, "hide_paragraph_confidence").bind(question_text, counter))
+		question_text.gui_input.connect(Callable(self, "rewrite_paragraph").bind(question_text, counter))
 		#eliminate this
 		await get_tree().create_timer(0.01).timeout # it's here because only in the next frame it updates the wrapping (from what I remember)
 		number_of_lines += question_text.get_line_count()
+		question_text.visible_characters_behavior = TextServer.VC_CHARS_AFTER_SHAPING
 		question_text.visible_characters = 0 # cannot be before "get_line_count()"
 		paragraphs.append(question_text)
 		counter += 1
@@ -121,30 +125,94 @@ func _process(delta):
 		current_character.global_position = character_current_position
 		#current_character.global_position.y = paragraphs[current_paragraph_index].global_position.y + current_height
 		#character_current_position.y = paragraphs[current_paragraph_index].global_position.y
-	for confidence_label in confidence_levels:
-		confidence_label[0].global_position = confidence_label[1]
+	for confidence_label in paragraph_info:
+		confidence_label["label"].global_position = confidence_label["position"]
 
 
 func show_paragraph_confidence(target:RichTextLabel, index:int):
-	if show_confidence:
-		var confidence_label = confidence_levels[index][0]
-		var paragraph_confidence_level:int = int(confidence_label.text)
-		confidence_label.visible = true
-		if paragraph_confidence_level >= 70:
-			target.add_theme_stylebox_override("normal", green_box)
-			confidence_label.add_theme_color_override("font_color", Color.DARK_GREEN)
-		elif paragraph_confidence_level >= 40:
-			target.add_theme_stylebox_override("normal", yellow_box)
-			confidence_label.add_theme_color_override("font_color", Color.YELLOW)
-		else:
-			target.add_theme_stylebox_override("normal", red_box)
-			confidence_label.add_theme_color_override("font_color", Color.FIREBRICK)
+	if finished_question:
+		if can_show and paragraph_info[index]["can_rewrite"] == false:
+			var confidence_label = paragraph_info[index]["label"]
+			var paragraph_confidence_level:int = int(confidence_label.text)
+			confidence_label.visible = true
+			if paragraph_confidence_level >= 70:
+				target.add_theme_stylebox_override("normal", green_box)
+				confidence_label.add_theme_color_override("font_color", Color.DARK_GREEN)
+			elif paragraph_confidence_level >= 40:
+				target.add_theme_stylebox_override("normal", yellow_box)
+				confidence_label.add_theme_color_override("font_color", Color.YELLOW)
+			else:
+				target.add_theme_stylebox_override("normal", red_box)
+				confidence_label.add_theme_color_override("font_color", Color.FIREBRICK)
 
 
 func hide_paragraph_confidence(target:RichTextLabel, index:int):
-	if show_confidence:
+	if finished_question:
 		target.remove_theme_stylebox_override("normal")
-		confidence_levels[index][0].visible = false
+		paragraph_info[index]["label"].visible = false
+
+
+func rewrite_paragraph(event, target:RichTextLabel, index:int):
+	if finished_question:
+		if event is InputEventMouseButton and event.pressed and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT):
+			if can_reset and int(paragraph_info[index]["label"].text) < 100:
+				if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+					can_reset = false
+					paragraph_info[index]["can_rewrite"] = true
+					current_score -= maximum_score / paragraphs.size()
+					target.visible_characters = 0
+					current_character.visible = true
+					current_paragraph_index = index
+					current_letter = 0
+					current_line = 0
+					current_letter_index = 0
+					initial_letter = 0
+					current_height = 0
+					character_current_position = paragraphs[index].global_position
+					character_next_position = paragraphs[index].global_position
+					character_initial_position = paragraphs[index].global_position
+					hide_paragraph_confidence(target, index)
+			elif paragraph_info[index]["can_rewrite"] == true:
+				emit_signal("clicked", current_character.global_position)
+				for i in visible_character_amount:
+					fill_paragraph_again(index)
+					if paragraphs[index].visible_ratio >= 1:
+						character_current_position = character_next_position
+						can_show = true
+						current_character.visible = false
+						paragraph_info[index]["can_rewrite"] = false
+						current_score += maximum_score / paragraphs.size()
+						recalculate_confidence(index)
+						print_debug("final score: " + str(current_score))
+						await get_tree().create_timer(1).timeout #this represent the animation playing before being able to review a question
+						can_reset = true
+						break
+
+
+func fill_paragraph_again(index:int):
+	paragraphs[index].visible_characters += 1
+	var current_paragraph:RichTextLabel = paragraphs[index]
+	if current_letter >= current_paragraph.text.length():
+		printerr("Current letter index is greater than the size of the current paragraph. Index out of bounds")
+		return
+	var paragraph_current_string = current_paragraph.text[current_letter]
+	current_character.text = paragraph_current_string
+	#update to next position
+	var character_size:Vector2
+	if current_paragraph.get_character_line(current_letter + 1) > current_line: # added "+1" because of visible_character_behaviour
+		set_current_character_to_new_line(character_size, current_paragraph)
+	else:
+		set_current_character_next_position(character_size, current_paragraph)
+
+
+func recalculate_confidence(index:int):
+	var regex = RegEx.new()
+	regex.compile("[0-9]+")
+	var result = regex.search(paragraph_info[index]["label"].text)
+	var base_value = result.get_string()
+	var confidence_value:int = generate_confidence_value(int(base_value))
+	print_debug(confidence_value)
+	paragraph_info[index]["label"].text = "confidence: " + str(confidence_value) + "%"
 
 
 func _on_gui_input(event):
@@ -161,9 +229,13 @@ func _on_gui_input(event):
 						current_paragraph_index += 1
 						print_debug(current_score)
 						if current_paragraph_index == paragraphs.size():
-							show_confidence = true
+							finished_question = true
+							can_show = true
+							can_click = false
 							current_character.visible = false
 							print_debug(current_score)
+							await get_tree().create_timer(1).timeout #this represent the animation playing before being able to review a question
+							can_reset = true
 						break
 					else:
 						update_character_position()
@@ -174,6 +246,7 @@ func update_character_position():
 	
 	var current_paragraph:RichTextLabel = paragraphs[current_paragraph_index]
 	if current_letter >= current_paragraph.text.length():
+		printerr("Current letter index is greater than the size of the current paragraph. Index out of bounds")
 		return
 	#var paragraph_current_string = current_paragraph.text.substr(current_letter, visible_character_amout)
 	var paragraph_current_string = current_paragraph.text[current_letter]
@@ -182,24 +255,8 @@ func update_character_position():
 	var character_size:Vector2
 	#print_debug("Initial letter: %d" % initial_letter)
 	
-	if current_paragraph.get_character_line(current_letter) > current_line:
-		initial_letter = current_letter
-		current_letter_index = 0
-		current_letter += 1
-		current_line += 1
-		character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
-		var line_separation = current_paragraph.get_theme_constant("line_separation")
-		var string_x_size = character_initial_position.x
-		var string_y_size = character_size.y
-		current_height += line_separation + string_y_size
-		character_next_position = Vector2(string_x_size, current_paragraph.global_position.y + current_height)
-		character_current_position = character_next_position
-		
-		character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
-		character_next_position.x = character_initial_position.x + character_size.x
-		character_next_position.y = current_paragraph.global_position.y + current_height
-		
-		current_letter_index += 1
+	if current_paragraph.get_character_line(current_letter + 1) > current_line: # added "+1" because of visible_character_behaviour
+		set_current_character_to_new_line(character_size, current_paragraph)
 		
 	elif paragraphs[current_paragraph_index].visible_ratio >= 1:
 		character_current_position = character_next_position
@@ -223,18 +280,43 @@ func update_character_position():
 		character_next_position = character_initial_position
 		
 	else:
-		character_current_position = character_next_position
-		character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
-		#print_debug(current_paragraph.text.substr(initial_letter, current_letter_index + 1))
-		character_next_position.x = character_initial_position.x + character_size.x
-		character_next_position.y = current_paragraph.global_position.y + current_height
-		current_letter_index += 1
-		current_letter += 1
+		set_current_character_next_position(character_size, current_paragraph)
+		
+
+
+func set_current_character_to_new_line(character_size:Vector2, current_paragraph:RichTextLabel):
+	initial_letter = current_letter
+	current_letter_index = 0
+	current_letter += 1
+	current_line += 1
+	character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
+	var line_separation = current_paragraph.get_theme_constant("line_separation")
+	var string_x_size = character_initial_position.x
+	var string_y_size = character_size.y
+	current_height += line_separation + string_y_size
+	character_next_position = Vector2(string_x_size, current_paragraph.global_position.y + current_height)
+	character_current_position = character_next_position
+	
+	character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
+	character_next_position.x = character_initial_position.x + character_size.x
+	character_next_position.y = current_paragraph.global_position.y + current_height
+	
+	current_letter_index += 1
+
+
+func set_current_character_next_position(character_size:Vector2, current_paragraph:RichTextLabel):
+	character_current_position = character_next_position
+	character_size = current_paragraph.get_theme_font("normal_font").get_string_size(current_paragraph.text.substr(initial_letter, current_letter_index + 1),1,-1,6)
+	#print_debug(current_paragraph.text.substr(initial_letter, current_letter_index + 1))
+	character_next_position.x = character_initial_position.x + character_size.x
+	character_next_position.y = current_paragraph.global_position.y + current_height
+	current_letter_index += 1
+	current_letter += 1
 
 
 func create_confidence_value():
 	var confidence_value:int = generate_confidence_value()
-	var confidence_array:Array = [] # confidence info as a dictionary?
+	var confidence_dict:Dictionary = {} # confidence info as a dictionary?
 	var confidence_label:Label = Label.new()
 	confidence_label.add_theme_font_size_override("font_size", 6)
 	confidence_label.text ="confidence: " + str(confidence_value) + "%"
@@ -242,13 +324,15 @@ func create_confidence_value():
 	confidence_label.add_theme_constant_override("outline_size", 3)
 	confidence_label.visible = false
 	add_child(confidence_label)
-	confidence_array.append(confidence_label)
+	confidence_dict["label"] = confidence_label
 	var value_position_x = paragraphs[current_paragraph_index].global_position.x + paragraphs[current_paragraph_index].get_rect().size.x/2 - confidence_label.get_rect().size.x/2
 	var value_position_y = paragraphs[current_paragraph_index].global_position.y + paragraphs[current_paragraph_index].get_rect().size.y/2 - confidence_label.get_rect().size.y/2
-	confidence_array.append(Vector2(value_position_x, value_position_y))
-	confidence_levels.append(confidence_array)
+	confidence_dict["position"] = Vector2(value_position_x, value_position_y)
+	var can_rewrite:bool = false
+	confidence_dict["can_rewrite"] = can_rewrite
+	paragraph_info.append(confidence_dict)
 
 
-func generate_confidence_value() -> int:
-	var confidence_value:int = (randi_range(10, 109) / 10) * 10
+func generate_confidence_value(base_value:int = 10) -> int:
+	var confidence_value:int = (randi_range(base_value, 109) / 10) * 10
 	return confidence_value
