@@ -1,6 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://q5o3sog6qkcl"]
+[gd_scene load_steps=3 format=3 uid="uid://q5o3sog6qkcl"]
 
 [ext_resource type="Script" path="res://scenes/game_manager.gd" id="1_hllki"]
+[ext_resource type="Script" path="res://scenes/semester_manager.gd" id="2_wy30o"]
 
 [node name="GameManager" type="Node"]
 script = ExtResource("1_hllki")
+
+[node name="SemesterManager" type="Node" parent="."]
+script = ExtResource("2_wy30o")
+
+[node name="TestManager" type="Node" parent="SemesterManager"]

@@ -26,7 +26,7 @@ var red_box = load("res://resources/paragraph_red_selection.tres")
 #var note_taker_font_2 = load("res://resources/fonts/note-taker.ttf")
 var caveat_font = load("res://resources/fonts/Caveat-VariableFont_wght.ttf")
 
-var visible_character_amount:int = 5
+var visible_character_amount:int = 10
 
 var current_character:RichTextLabel
 var character_current_position
