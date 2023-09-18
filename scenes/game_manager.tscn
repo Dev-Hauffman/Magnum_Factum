@@ -8,5 +8,3 @@ script = ExtResource("1_hllki")
 
 [node name="SemesterManager" type="Node" parent="."]
 script = ExtResource("2_wy30o")
-
-[node name="TestManager" type="Node" parent="SemesterManager"]

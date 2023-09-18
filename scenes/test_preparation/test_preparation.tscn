@@ -404,3 +404,5 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "LET'S
 DO IT!"
+
+[connection signal="pressed" from="VBoxContainer/ChoiceContainer/PanelContainer5/VBoxContainer/Button" to="." method="_on_button_pressed"]

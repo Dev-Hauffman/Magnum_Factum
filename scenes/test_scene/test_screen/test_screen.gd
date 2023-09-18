@@ -2,6 +2,7 @@ extends Node2D
 
 
 signal initialized
+signal finished_test
 
 
 var questions_info:Array[QuestionInfo] = []
@@ -76,7 +77,6 @@ func show_questions():
 	question = questions[0]
 	height_middle = question.global_position.y + get_viewport_rect().size.y/4
 	camera_controller.move_and_zoom(Vector2(middle,height_middle), Vector2(1, 1))
-	
 
 
 func treat_question_click(position:Vector2):
@@ -96,5 +96,7 @@ func _on_timer_timeout():
 			children.can_click = false
 			children.can_reset = false
 			children.can_show = false
+			children.time_is_up = true
 			final_score += children.get_score()
 	print_debug("final score: " + str(final_score))
+	emit_signal("finished_test")
