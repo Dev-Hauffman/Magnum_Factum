@@ -5,5 +5,7 @@ extends Node2D
 @onready var test_screen = $GridContainer/TestViewportContainer/SubViewport/TestScreen
 
 
-func _ready():
-	test_screen.initialize(test_camera)
+func start_test(speed_value:int, precision_value:int):
+	test_screen.initialize(test_camera, speed_value, precision_value)
+	
+	

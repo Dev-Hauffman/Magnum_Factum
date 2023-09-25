@@ -1,4 +1,5 @@
 extends Node
+class_name SemesterManager
 
 
 signal finished
@@ -31,12 +32,14 @@ func define_tests_order():
 	var counter:int = 0
 	while not done:
 		for discipline in disciplines_data:
+			var test_info:Array = []
 			if disciplines_data[discipline]["quantity"] > counter:
-				tests_order.append(discipline)
+				test_info.append(discipline)
+				test_info.append(counter)
+				tests_order.append(test_info)
 		counter += 1
 		done = true
 		for discipline in disciplines_data:
 			if disciplines_data[discipline]["quantity"] > counter:
 				done = false
-	print_debug("finished")
 	emit_signal("finished")

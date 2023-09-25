@@ -27,6 +27,7 @@ var red_box = load("res://resources/paragraph_red_selection.tres")
 var caveat_font = load("res://resources/fonts/Caveat-VariableFont_wght.ttf")
 
 var visible_character_amount:int = 10
+var answer_precision:int = 10
 
 var current_character:RichTextLabel
 var character_current_position
@@ -49,10 +50,12 @@ var initial_letter:int = 0
 # overlap "placeholder" container containing the underlines and empty labels, to aid me finding the right
 # font size, I simulated the creation of a vbox and put labels inside with a random letter inside "T" 
 # (capital) to make that letter match the size of the text inside the label representing the question text
-func initialize(content:QuestionInfo):
+func initialize(content:QuestionInfo, writing_speed:int, precision:int):
 	maximum_score = content.score
 	question_number.text = "Question " + str(content.number)
 	score_label.text = "(" + "Score: " + str(content.score) + ")"
+	visible_character_amount = writing_speed
+	answer_precision = precision
 	
 	var margin:MarginContainer = MarginContainer.new()
 	add_child(margin)
@@ -339,8 +342,8 @@ func create_confidence_value():
 	paragraph_info.append(confidence_dict)
 
 
-func generate_confidence_value(base_value:int = 10) -> int:
-	var confidence_value:int = (randi_range(base_value, 109) / 10) * 10
+func generate_confidence_value(base_value:int = answer_precision) -> int:
+	var confidence_value:int = (randi_range(base_value, 109) / 10) * 10 # If I wanted to make increments of 5. I just have to substitute 10 for 5
 	return confidence_value
 
 

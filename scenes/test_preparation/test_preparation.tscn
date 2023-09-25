@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cnatboplfjvps"]
+[gd_scene load_steps=3 format=3 uid="uid://cnatboplfjvps"]
 
 [ext_resource type="Script" path="res://scenes/test_preparation/test_preparation.gd" id="1_trmle"]
+[ext_resource type="PackedScene" uid="uid://dcn4tuxqo0gbr" path="res://scenes/test_preparation/choice_panel.tscn" id="2_d7i80"]
 
 [node name="TestPreparation" type="CanvasLayer"]
 script = ExtResource("1_trmle")
@@ -276,30 +277,30 @@ offset_bottom = 346.0
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer3/VBoxContainer2"]
+[node name="TirednessContainer" type="HBoxContainer" parent="HBoxContainer3/VBoxContainer2"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="HBoxContainer3/VBoxContainer2/HBoxContainer"]
+[node name="TirednessLabel" type="Label" parent="HBoxContainer3/VBoxContainer2/TirednessContainer"]
 layout_mode = 2
 text = "Tiredness"
 
-[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer3/VBoxContainer2/HBoxContainer"]
+[node name="TirednessBar" type="ProgressBar" parent="HBoxContainer3/VBoxContainer2/TirednessContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 tooltip_text = "you speed is at 10"
 show_percentage = false
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="HBoxContainer3/VBoxContainer2"]
+[node name="KnowledgeContainer" type="HBoxContainer" parent="HBoxContainer3/VBoxContainer2"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="HBoxContainer3/VBoxContainer2/HBoxContainer2"]
+[node name="KnowledgeLabel" type="Label" parent="HBoxContainer3/VBoxContainer2/KnowledgeContainer"]
 layout_mode = 2
 text = "Knowledge"
 
-[node name="ProgressBar" type="ProgressBar" parent="HBoxContainer3/VBoxContainer2/HBoxContainer2"]
+[node name="KnowledgeBar" type="ProgressBar" parent="HBoxContainer3/VBoxContainer2/KnowledgeContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
@@ -312,7 +313,7 @@ offset_top = 61.0
 offset_right = 594.0
 offset_bottom = 278.0
 
-[node name="Label2" type="Label" parent="VBoxContainer"]
+[node name="TestNameLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Test I - Computability and Complexity Theory"
 horizontal_alignment = 1
@@ -320,36 +321,15 @@ autowrap_mode = 2
 
 [node name="ChoiceContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 size_flags_vertical = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="VBoxContainer/ChoiceContainer"]
+[node name="ChoicePanel" parent="VBoxContainer/ChoiceContainer" instance=ExtResource("2_d7i80")]
+visible = false
 layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ChoiceContainer/PanelContainer"]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="VBoxContainer/ChoiceContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Week 1"
-horizontal_alignment = 1
-
-[node name="Button" type="Button" parent="VBoxContainer/ChoiceContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Study"
-
-[node name="Label2" type="Label" parent="VBoxContainer/ChoiceContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "- or -"
-horizontal_alignment = 1
-
-[node name="Button2" type="Button" parent="VBoxContainer/ChoiceContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Rest"
 
 [node name="PanelContainer2" type="PanelContainer" parent="VBoxContainer/ChoiceContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -362,6 +342,7 @@ text = "Week 2"
 horizontal_alignment = 1
 
 [node name="PanelContainer3" type="PanelContainer" parent="VBoxContainer/ChoiceContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -374,6 +355,7 @@ text = "Week 3"
 horizontal_alignment = 1
 
 [node name="PanelContainer4" type="PanelContainer" parent="VBoxContainer/ChoiceContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 
@@ -386,23 +368,30 @@ text = "Week 4
 "
 horizontal_alignment = 1
 
-[node name="PanelContainer5" type="PanelContainer" parent="VBoxContainer/ChoiceContainer"]
+[node name="TestContainer" type="PanelContainer" parent="VBoxContainer/ChoiceContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ChoiceContainer/PanelContainer5"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ChoiceContainer/TestContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 35
 
-[node name="Label" type="Label" parent="VBoxContainer/ChoiceContainer/PanelContainer5/VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Test Day
 "
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer/ChoiceContainer/PanelContainer5/VBoxContainer"]
+[node name="Button" type="Button" parent="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "LET'S
 DO IT!"
 
-[connection signal="pressed" from="VBoxContainer/ChoiceContainer/PanelContainer5/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

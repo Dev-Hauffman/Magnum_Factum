@@ -32,7 +32,7 @@ func _ready():
 	camera_controller.can_zoom = true
 
 
-func initialize(camera:Camera2D):
+func initialize(camera:Camera2D, writing_speed:int, precision:int):
 	camera_controller.initialize(camera)
 	middle = limits.global_position.x + (limits.size.x/2)
 	camera_controller.set_camera_position(Vector2(middle, test_container.position.y))
@@ -42,7 +42,7 @@ func initialize(camera:Camera2D):
 	var left_limit = limits.global_position.x
 	camera_controller.set_camera_limits(top_limit, right_limit, bottom_limit, left_limit)
 	generate_questions()
-	await add_questions()
+	await add_questions(writing_speed, precision)
 	emit_signal("initialized")
 
 
@@ -51,12 +51,12 @@ func generate_questions():
 	questions_info = question_generator.define_questions()
 
 
-func add_questions():
+func add_questions(writing_speed:int, precision:int):
 	for entry in questions_info:
 		var question = preload("res://scenes/test_scene/test_screen/question.tscn").instantiate()
 		question.mouse_filter = Control.MOUSE_FILTER_PASS
 		questions_container.add_child(question)
-		question.initialize(entry)
+		question.initialize(entry, writing_speed, precision)
 		question.connect("clicked", Callable(self, "treat_question_click"))
 		questions.append(question)
 		await question.populated

@@ -29,6 +29,7 @@ static func choose_phrase()-> Dictionary:
 	var chosen_phrase:Dictionary = PHRASES[str(random_number)]
 	return chosen_phrase
 
+
 static func choose_phrase_by_size(target_size:int) -> String:
 	var candidates:Array[String] = []
 	for phrase in PHRASES:
