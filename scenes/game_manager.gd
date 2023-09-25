@@ -29,7 +29,6 @@ func run_semester():
 		var test_preparation = preload("res://scenes/test_preparation/test_preparation.tscn").instantiate()
 		current_scene = test_preparation
 		add_child(test_preparation)
-		print_debug("gamemanager: " + str(current_tiredness_level))
 		test_preparation.initialize(next_test[0], str(next_test[1]), current_tiredness_level)
 		test_preparation.finished_preparation.connect(Callable(self, "run_test"))
 		test_preparation.stress_defined.connect(Callable(self, "update_accumulated_stress"))

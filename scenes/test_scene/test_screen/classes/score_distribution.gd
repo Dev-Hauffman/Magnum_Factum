@@ -89,25 +89,25 @@ const distribution:Dictionary = {
 	},
 	"5": {
 		"2111": {
-			"0": {
+			"0": { #copied
 				"easy": [1.0, 1.0],
 				"medium": [2.0],
 				"hard" : [2.5],
 				"very hard": [3.0]
 			},
-			"1": {
+			"1": { #copied
 				"easy": [0.5, 1.0],
 				"medium": [2.0],
 				"hard" : [2.5],
 				"very hard": [3.5]
 			},
-			"2": {
+			"2": { #copied
 				"easy": [1.0, 1.0],
 				"medium": [2.0],
 				"hard" : [2.0],
 				"very hard": [3.5]
 			},
-			"3": {
+			"3": { #copied
 				"easy": [0.5, 0.5],
 				"medium": [2.5],
 				"hard" : [2.5],

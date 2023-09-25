@@ -120,7 +120,7 @@ func _process(delta):
 		zoomFactor = 1.0
 	if should_shake:
 		shake(delta)
-	if player_moved:
+	if player_moved and move_tween != null:
 		move_tween.stop()
 		player_moved = false
 

@@ -19,8 +19,7 @@ var precision:int
 
 
 func initialize(test_name:String, test_number:String, stress_level:int):
-	test_name_label.text = "Test " + test_number + " - " + test_name
-	print_debug("testpreparation: " + str(stress_level))
+	test_name_label.text = "Test " + str(int(test_number)+1) + " - " + test_name
 	tiredness_bar.value = stress_level
 	update_speed_value()
 	populate_choices()
@@ -68,7 +67,7 @@ func rest_selected():
 
 
 func update_speed_value():
-	writting_speed = 10 - (tiredness_bar.value/10)
+	writting_speed = 20 - (tiredness_bar.value/5)
 	if writting_speed == 0:
 		writting_speed = 1
 	tiredness_bar.tooltip_text = "Your writing speed is at " + str(writting_speed)

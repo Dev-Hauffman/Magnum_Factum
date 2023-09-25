@@ -3,11 +3,9 @@ class_name QuestionGenerator
 
 
 var Difficulties:Dictionary = {
-	"0": "Very easy",
 	"1": "Easy",
 	"2": "Medium",
-	"3": "Hard",
-	"4": "Very hard"
+	"3": "Hard"
 }
 
 
@@ -35,9 +33,6 @@ func define_questions() -> Array[QuestionInfo]:
 func populate_questions(questions:Array[QuestionInfo]) -> Array[QuestionInfo]:
 	for question in questions:
 		match question.difficulty:
-			"Very easy":
-				var paragraph_info:Dictionary = QuestionPhrases.choose_phrase()
-				question.paragraph.append(paragraph_info)
 			"Easy":
 				for i in range(2):
 					var paragraph_info:Dictionary = QuestionPhrases.choose_phrase()
@@ -48,10 +43,6 @@ func populate_questions(questions:Array[QuestionInfo]) -> Array[QuestionInfo]:
 					question.paragraph.append(paragraph_info)
 			"Hard":
 				for i in range(8):
-					var paragraph_info:Dictionary = QuestionPhrases.choose_phrase()
-					question.paragraph.append(paragraph_info)
-			"Very hard":
-				for i in range(10):
 					var paragraph_info:Dictionary = QuestionPhrases.choose_phrase()
 					question.paragraph.append(paragraph_info)
 	return questions
