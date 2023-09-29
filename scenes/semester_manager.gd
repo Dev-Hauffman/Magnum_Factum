@@ -19,7 +19,6 @@ func setup_semester(available_disciplines:Array[String]):
 func create_tests(available_disciplines:Array[String]):
 	for discipline in available_disciplines:
 		var tests:Dictionary = {}
-		var test_string = "test"
 		var number_of_tests = 2 # in the future might be 3 to 2 tests without G2
 		tests["quantity"] = number_of_tests
 		var scores:Array[float] = []
@@ -43,3 +42,21 @@ func define_tests_order():
 			if disciplines_data[discipline]["quantity"] > counter:
 				done = false
 	emit_signal("finished")
+
+
+func has_passed() -> bool:
+	return check_final_grades()
+
+
+func check_final_grades() -> bool:
+	var passed:bool = true
+	for discipline in disciplines_data:
+		var final_score:float = 0
+		for score in disciplines_data[discipline]["scores"]:
+			final_score += score
+		final_score = final_score / float(disciplines_data[discipline]["quantity"])
+		print_debug(discipline + "final score is: " + str(final_score))
+		disciplines_data[discipline]["final_grade"] = final_score
+		if final_score < 7.0:
+			passed = false
+	return passed

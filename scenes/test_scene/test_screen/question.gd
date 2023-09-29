@@ -2,6 +2,7 @@ extends PanelContainer
 
 signal clicked(leading_character_position)
 signal populated
+signal confidence_defined(confidence_value, position, size)
 
 
 var maximum_score:float = 0
@@ -190,6 +191,7 @@ func rewrite_paragraph(event, target:RichTextLabel, index:int):
 						paragraph_info[index]["can_rewrite"] = false
 						#current_score += maximum_score / paragraphs.size()
 						recalculate_confidence(index)
+						emit_signal("confidence_defined",int(paragraph_info[index]["label"].text), paragraphs[index].global_position, paragraphs[index].get_rect())
 						#print_debug("final score: " + str(current_score))
 						await get_tree().create_timer(1).timeout #this represent the animation playing before being able to review a question
 						can_reset = true
@@ -219,7 +221,6 @@ func recalculate_confidence(index:int):
 	var base_value = result.get_string()
 	var confidence_value:int = generate_confidence_value(int(base_value))
 	paragraph_info[index]["confidence_value"] = confidence_value
-	print_debug(paragraph_info[index]["confidence_value"])
 	paragraph_info[index]["label"].text = "confidence: " + str(confidence_value) + "%"
 
 
@@ -233,6 +234,7 @@ func _on_gui_input(event):
 					if paragraphs[current_paragraph_index].visible_ratio >= 1:
 						#current_score += maximum_score / paragraphs.size()
 						create_confidence_value()
+						emit_signal("confidence_defined",int(paragraph_info[current_paragraph_index]["label"].text), paragraphs[current_paragraph_index].global_position, paragraphs[current_paragraph_index].get_rect())
 						update_character_position() #has to be before increase in current_paragraph_index or won't update
 						current_paragraph_index += 1
 						#print_debug(current_score)

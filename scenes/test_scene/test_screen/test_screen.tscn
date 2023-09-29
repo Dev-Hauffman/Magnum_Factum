@@ -28,7 +28,7 @@ custom_minimum_size = Vector2(1280, 1920)
 offset_left = -488.0
 offset_top = -98.0
 offset_right = 792.0
-offset_bottom = 1182.0
+offset_bottom = 1961.0
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_p3a5l")
 

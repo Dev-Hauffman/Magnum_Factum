@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyg32nhmjs6rq"]
+
+[ext_resource type="Script" path="res://scenes/test_scene/test_screen/confidence_label_object.gd" id="1_1ui3d"]
+
+[sub_resource type="Animation" id="Animation_jcwcu"]
+resource_name = "Ascend"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ConfidenceLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_n02r2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ConfidenceLabel:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q4qw0"]
+_data = {
+"Ascend": SubResource("Animation_jcwcu"),
+"RESET": SubResource("Animation_n02r2")
+}
+
+[node name="ConfidenceLabel" type="Label"]
+modulate = Color(1, 1, 1, 0)
+offset_top = 5.0
+offset_right = 40.0
+offset_bottom = 31.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Confidence"
+script = ExtResource("1_1ui3d")
+
+[node name="ConfidenceAnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_q4qw0")
+}

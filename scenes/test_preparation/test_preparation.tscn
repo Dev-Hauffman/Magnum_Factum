@@ -315,7 +315,7 @@ offset_bottom = 278.0
 
 [node name="TestNameLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Test I - Computability and Complexity Theory"
+text = "Semester I - Computability and Complexity Theory - Test I"
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -383,15 +383,16 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 theme_override_constants/separation = 35
 
-[node name="Label" type="Label" parent="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer"]
+[node name="TestDayLabel" type="Label" parent="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Test Day
 "
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer"]
+[node name="TestStartButton" type="Button" parent="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+disabled = true
 text = "LET'S
 DO IT!"
 
-[connection signal="pressed" from="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer/TestStartButton" to="." method="_on_button_pressed"]

@@ -13,6 +13,8 @@ signal rest_selected
 
 func initialize(week_value:String):
 	week_label.text = week_value
+	study_button.disabled = true
+	rest_button.disabled = true
 
 
 func _on_study_button_pressed():

@@ -2,7 +2,7 @@ extends Node2D
 
 
 signal initialized
-signal finished_test
+signal finished_test(final_score)
 
 
 var questions_info:Array[QuestionInfo] = []
@@ -15,7 +15,6 @@ var questions = []
 @onready var test_container = $TestPanelContainer
 @onready var limits:PanelContainer = $LimitsContainer
 @onready var questions_container = $TestPanelContainer/TestMarginContainer/QuestionsContainer
-#@onready var test_label = $TestPanelContainer/TestMarginContainer/QuestionsContainer/PanelContainer/QuestionMarginContainer/QuestionContainer/Label
 
 
 func _ready():
@@ -25,7 +24,7 @@ func _ready():
 	#new_label.add_theme_color_override("font_color", Color.BLACK)
 	#new_label.text = test_label.text
 	await initialized
-	await get_tree().process_frame
+	#await get_tree().process_frame #is this necessary?
 	#await get_tree().create_timer(18.0).timeout
 	#await show_questions()
 	camera_controller.can_move = true
@@ -58,6 +57,7 @@ func add_questions(writing_speed:int, precision:int):
 		questions_container.add_child(question)
 		question.initialize(entry, writing_speed, precision)
 		question.connect("clicked", Callable(self, "treat_question_click"))
+		question.connect("confidence_defined", Callable(self, "spawn_confidence_label"))
 		questions.append(question)
 		await question.populated
 
@@ -85,6 +85,12 @@ func treat_question_click(position:Vector2):
 	camera_controller.zoom(Vector2(2, 2))
 
 
+func spawn_confidence_label(confidence_value:int, paragraph_position:Vector2, paragraph_rectangle:Rect2):
+	var confidence_label = preload("res://scenes/test_scene/test_screen/confidence_label.tscn").instantiate()
+	confidence_label.initialize(confidence_value, paragraph_position, paragraph_rectangle)
+	add_child(confidence_label)
+
+
 func _on_test_panel_container_resized():
 	camera_controller.set_bottom_limit(limits.global_position.y + limits.size.y)
 
@@ -98,5 +104,6 @@ func _on_timer_timeout():
 			children.can_show = false
 			children.time_is_up = true
 			final_score += children.get_score()
+	final_score = snapped(final_score, 0.1)
 	print_debug("final score: " + str(final_score))
-	emit_signal("finished_test")
+	emit_signal("finished_test", final_score)

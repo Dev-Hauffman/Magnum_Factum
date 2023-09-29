@@ -135,8 +135,8 @@ func handle_movement(delta):
 		camera.position.x = lerp(camera.position.x, target_position_x, movement_speed * delta)
 		camera.position.y = lerp(camera.position.y, target_position_y, movement_speed * delta)
 		
-	camera.position.x = clamp(camera.position.x, camera.limit_left  + get_viewport_rect().size.x/2, camera.limit_right - get_viewport_rect().size.x/2)
-	camera.position.y = clamp(camera.position.y, camera.limit_top + get_viewport_rect().size.y/2, camera.limit_bottom - get_viewport_rect().size.y/2)
+	#camera.position.x = clamp(camera.position.x, camera.limit_left  + get_viewport_rect().size.x/2, camera.limit_right - get_viewport_rect().size.x/2)
+	#camera.position.y = clamp(camera.position.y, camera.limit_top + get_viewport_rect().size.y/2, camera.limit_bottom - get_viewport_rect().size.y/2)
 	
 	if inputX == 0 and inputY == 0:
 		if Input.is_action_just_pressed("pan_button"):
