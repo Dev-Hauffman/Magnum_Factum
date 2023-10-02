@@ -1,7 +1,232 @@
-[gd_scene load_steps=3 format=3 uid="uid://da1gngfv686de"]
+[gd_scene load_steps=14 format=3 uid="uid://da1gngfv686de"]
 
 [ext_resource type="Script" path="res://scenes/test_scene/test_scene.gd" id="1_p0b4e"]
 [ext_resource type="PackedScene" uid="uid://bjk32f1avr400" path="res://scenes/test_scene/test_screen/test_screen.tscn" id="1_ta3gf"]
+[ext_resource type="Script" path="res://scenes/test_scene/time_out_notice.gd" id="3_nen2e"]
+
+[sub_resource type="Animation" id="Animation_8g8s6"]
+resource_name = "Slide in"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TimeLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-431, 0), Vector2(-8, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("IsUpLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(448, 78), Vector2(-20, 78)]
+}
+
+[sub_resource type="Animation" id="Animation_sthhu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("IsUpLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(448, 78)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TimeLabel:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-431, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uf3e2"]
+_data = {
+"RESET": SubResource("Animation_sthhu"),
+"Slide in": SubResource("Animation_8g8s6")
+}
+
+[sub_resource type="Animation" id="Animation_vq25y"]
+resource_name = "Fade out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_q40t7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_6uwdr"]
+resource_name = "Fade in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5vsnn"]
+_data = {
+"Fade in": SubResource("Animation_6uwdr"),
+"Fade out": SubResource("Animation_vq25y"),
+"RESET": SubResource("Animation_q40t7")
+}
+
+[sub_resource type="Animation" id="Animation_tcjxj"]
+resource_name = "Show score"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("YourLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ScoreLabel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("IsLabel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.9),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ScoreValueLabel:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_8e2a2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("YourLabel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ScoreLabel:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("IsLabel:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("ScoreValueLabel:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_boaqx"]
+_data = {
+"RESET": SubResource("Animation_8e2a2"),
+"Show score": SubResource("Animation_tcjxj")
+}
 
 [node name="TestScene" type="Node2D"]
 script = ExtResource("1_p0b4e")
@@ -34,10 +259,120 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="GridContainer/TestViewportContainer"]
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(640, 360)
 render_target_update_mode = 4
 
 [node name="TestCamera2D" type="Camera2D" parent="GridContainer/TestViewportContainer/SubViewport"]
 editor_draw_limits = true
 
 [node name="TestScreen" parent="GridContainer/TestViewportContainer/SubViewport" instance=ExtResource("1_ta3gf")]
+
+[node name="TimeUpNotice" type="Node2D" parent="."]
+position = Vector2(218, 84)
+script = ExtResource("3_nen2e")
+
+[node name="TimeLabel" type="RichTextLabel" parent="TimeUpNotice"]
+offset_left = -431.0
+offset_right = -230.0
+offset_bottom = 110.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/normal_font_size = 80
+text = "TIME"
+fit_content = true
+scroll_active = false
+
+[node name="IsUpLabel" type="RichTextLabel" parent="TimeUpNotice"]
+offset_left = 448.0
+offset_top = 78.0
+offset_right = 674.0
+offset_bottom = 188.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/normal_font_size = 80
+text = "IS UP!"
+fit_content = true
+scroll_active = false
+
+[node name="TimeUpAnimation" type="AnimationPlayer" parent="TimeUpNotice"]
+libraries = {
+"": SubResource("AnimationLibrary_uf3e2")
+}
+
+[node name="DarkBackground" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TransitionAnimation" type="AnimationPlayer" parent="DarkBackground"]
+libraries = {
+"": SubResource("AnimationLibrary_5vsnn")
+}
+
+[node name="ScoreResult" type="Node2D" parent="."]
+
+[node name="YourLabel" type="RichTextLabel" parent="ScoreResult"]
+visible = false
+offset_left = 13.0
+offset_top = -5.0
+offset_right = 239.0
+offset_bottom = 105.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/normal_font_size = 80
+text = "YOUR"
+fit_content = true
+scroll_active = false
+
+[node name="ScoreLabel" type="RichTextLabel" parent="ScoreResult"]
+visible = false
+offset_left = 258.0
+offset_top = -7.0
+offset_right = 525.0
+offset_bottom = 103.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/normal_font_size = 80
+text = "SCORE
+"
+fit_content = true
+scroll_active = false
+
+[node name="IsLabel" type="RichTextLabel" parent="ScoreResult"]
+visible = false
+offset_left = 536.0
+offset_top = -7.0
+offset_right = 803.0
+offset_bottom = 103.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/normal_font_size = 80
+text = "IS:
+"
+fit_content = true
+scroll_active = false
+
+[node name="ScoreValueLabel" type="RichTextLabel" parent="ScoreResult"]
+visible = false
+offset_left = 121.0
+offset_top = 77.0
+offset_right = 490.0
+offset_bottom = 350.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/normal_font_size = 200
+bbcode_enabled = true
+text = "[center]100[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="ScoreResultAnimation" type="AnimationPlayer" parent="ScoreResult"]
+libraries = {
+"": SubResource("AnimationLibrary_boaqx")
+}

@@ -1,7 +1,7 @@
 extends Node2D
 
 
-signal finished
+signal finished_displaying
 
 
 var boards:Array = []
@@ -43,4 +43,5 @@ func present_boards():
 		await get_tree().create_timer(1).timeout
 
 func finished_presentation():
-	emit_signal("finished")
+	await get_tree().create_timer(1).timeout
+	emit_signal("finished_displaying")

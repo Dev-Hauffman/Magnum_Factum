@@ -21,7 +21,7 @@ func show_semester():
 	var semester_display = preload("res://scenes/show_semester/show_semester.tscn").instantiate()
 	current_scene = semester_display
 	add_child(semester_display)
-	semester_display.connect("finished", Callable(self, "run_semester"))
+	semester_display.connect("finished_displaying", Callable(self, "run_semester"))
 	semester_display.start(current_semester)
 	
 
@@ -52,7 +52,7 @@ func end_semester():
 	print_debug("semester has ended")
 	var passed:bool = semester_manager.check_final_grades()
 	if passed:
-		show_semester()
+		set_current_semester_disciplines()
 	if not passed:
 		print_debug("GAME OVER")
 
@@ -63,7 +63,7 @@ func run_test(writing_speed, precision):
 	var test = preload("res://scenes/test_scene/test_scene.tscn").instantiate()
 	current_scene = test
 	add_child(test)
-	test.test_screen.connect("finished_test", Callable(self, "treat_test_end"))
+	test.connect("test_ended", Callable(self, "treat_test_end"))
 	test.start_test(writing_speed, precision)
 
 
@@ -71,7 +71,6 @@ func update_accumulated_stress(stress_amount:int):
 	current_tiredness_level = stress_amount
 
 
-
-func treat_test_end(score:float): #TEMPORARY
+func treat_test_end(score:float):
 	semester_manager.disciplines_data[current_test_info[0]]["scores"].append(score)
 	run_semester()

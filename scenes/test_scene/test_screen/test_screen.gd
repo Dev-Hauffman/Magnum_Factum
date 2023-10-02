@@ -15,6 +15,7 @@ var questions = []
 @onready var test_container = $TestPanelContainer
 @onready var limits:PanelContainer = $LimitsContainer
 @onready var questions_container = $TestPanelContainer/TestMarginContainer/QuestionsContainer
+@onready var timer = $Timer
 
 
 func _ready():
@@ -29,6 +30,8 @@ func _ready():
 	#await show_questions()
 	camera_controller.can_move = true
 	camera_controller.can_zoom = true
+	timer.start()
+	
 
 
 func initialize(camera:Camera2D, writing_speed:int, precision:int):

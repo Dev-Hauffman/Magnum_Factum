@@ -18,7 +18,7 @@ func initialize(confidence_value:int, paragraph_position:Vector2, paragraph_rect
 	add_theme_color_override("font_outline_color", Color.BLACK)
 	add_theme_constant_override("outline_size", 3)
 	if confidence_value >= 70:
-		add_theme_color_override("font_color", Color.DARK_GREEN)
+		add_theme_color_override("font_color", Color.GREEN)
 	elif confidence_value >= 40:
 		add_theme_color_override("font_color", Color.YELLOW)
 	else:

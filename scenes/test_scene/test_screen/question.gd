@@ -28,7 +28,7 @@ var red_box = load("res://resources/paragraph_red_selection.tres")
 var caveat_font = load("res://resources/fonts/Caveat-VariableFont_wght.ttf")
 
 var visible_character_amount:int = 10
-var answer_precision:int = 10
+var answer_precision:int
 
 var current_character:RichTextLabel
 var character_current_position
@@ -353,9 +353,9 @@ func get_score() -> float:
 	var score:float = 0
 	for confidence_value in paragraph_info:
 		var random_value = randi_range(0, 100)
-		print_debug("random value is: " + str(random_value))
-		print_debug("confidence value is: " + str(confidence_value["confidence_value"]))
+		#print_debug("random value is: " + str(random_value))
+		#print_debug("confidence value is: " + str(confidence_value["confidence_value"]))
 		if random_value <= confidence_value["confidence_value"]:
 			score += maximum_score / paragraphs.size()
-			print_debug("score is now: %f" % score)
+			#print_debug("score is now: %f" % score)
 	return score

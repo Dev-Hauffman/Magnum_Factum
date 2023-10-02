@@ -7,7 +7,7 @@ signal stress_defined(stress_amount)
 
 var number_of_weeks:int = 4
 var rest_amount:int = 15
-var stress_amount:int = 10
+var stress_amount:int = 25
 var writting_speed:int = 10
 var precision:int
 var choice_panels:Array = []
@@ -75,13 +75,14 @@ func rest_selected():
 	else:
 		tiredness_bar.value -= rest_amount
 	update_speed_value()
+	update_precision_value()
 	enable_next_choice_panel()
 
 
 func update_speed_value():
-	writting_speed = 20 - (tiredness_bar.value/5)
+	writting_speed = 20 - (tiredness_bar.value/10)
 	if writting_speed == 0:
-		writting_speed = 1
+		writting_speed = 10
 	tiredness_bar.tooltip_text = "Your writing speed is at " + str(writting_speed)
 
 
