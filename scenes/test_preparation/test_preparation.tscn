@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://cnatboplfjvps"]
+[gd_scene load_steps=12 format=3 uid="uid://cnatboplfjvps"]
 
 [ext_resource type="Script" path="res://scenes/test_preparation/test_preparation.gd" id="1_trmle"]
 [ext_resource type="PackedScene" uid="uid://dcn4tuxqo0gbr" path="res://scenes/test_preparation/choice_panel.tscn" id="2_d7i80"]
 [ext_resource type="Animation" uid="uid://btjqe6je1e1si" path="res://resources/pulse_animation.res" id="2_w42ns"]
+
+[sub_resource type="Theme" id="Theme_kip0t"]
+TooltipLabel/font_sizes/font_size = 10
 
 [sub_resource type="Animation" id="Animation_oin8y"]
 length = 0.001
@@ -25,9 +28,73 @@ _data = {
 "RESET": SubResource("Animation_oin8y")
 }
 
+[sub_resource type="Theme" id="Theme_m5n2d"]
+TooltipLabel/font_sizes/font_size = 10
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_toxy5"]
 _data = {
 "Pulse": ExtResource("2_w42ns")
+}
+
+[sub_resource type="Animation" id="Animation_3si2r"]
+resource_name = "Fade out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Overview:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Overview:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_oed7v"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Overview:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Overview:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pukbg"]
+_data = {
+"Fade out": SubResource("Animation_3si2r"),
+"RESET": SubResource("Animation_oed7v")
 }
 
 [node name="TestPreparation" type="CanvasLayer"]
@@ -62,7 +129,8 @@ text = "Tiredness"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-tooltip_text = "you speed is at 10"
+tooltip_text = "Writing speed defines how many letters you write per click "
+theme = SubResource("Theme_kip0t")
 show_percentage = false
 
 [node name="WritingSpeedValue" type="Label" parent="HBoxContainer3/VBoxContainer2/TirednessContainer/TirednessBar"]
@@ -78,6 +146,7 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_right = 464.0
 offset_bottom = 27.0
+mouse_filter = 2
 show_percentage = false
 
 [node name="TirednessPreviewAnimation" type="AnimationPlayer" parent="HBoxContainer3/VBoxContainer2/TirednessContainer/TirednessBar/TirednessBarPreview"]
@@ -97,7 +166,8 @@ text = "Knowledge"
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
-tooltip_text = "your precision is 20%"
+tooltip_text = "Answer precision defines how likely you are to be correct on each paragraph write"
+theme = SubResource("Theme_m5n2d")
 show_percentage = false
 
 [node name="AnswerPrecisionValue" type="Label" parent="HBoxContainer3/VBoxContainer2/KnowledgeContainer/KnowledgeBar"]
@@ -113,6 +183,7 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_right = 453.0
 offset_bottom = 27.0
+mouse_filter = 2
 show_percentage = false
 
 [node name="KnowledgeAnimationPreview" type="AnimationPlayer" parent="HBoxContainer3/VBoxContainer2/KnowledgeContainer/KnowledgeBar/KnowledgeBarPreview"]
@@ -207,5 +278,87 @@ layout_mode = 2
 disabled = true
 text = "LET'S
 DO IT!"
+
+[node name="Overview" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="DisciplineName" type="Label" parent="Overview"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -146.0
+offset_top = -111.0
+offset_right = 146.0
+offset_bottom = -85.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Computability and Complexity Theory"
+horizontal_alignment = 1
+
+[node name="FormulaContainer" type="VBoxContainer" parent="Overview"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.0
+offset_top = -73.0
+offset_right = 15.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FormulaDenominator" type="HBoxContainer" parent="Overview/FormulaContainer"]
+layout_mode = 2
+
+[node name="FirstTestValue" type="Label" parent="Overview/FormulaContainer/FormulaDenominator"]
+layout_mode = 2
+text = "T1"
+
+[node name="Plus" type="Label" parent="Overview/FormulaContainer/FormulaDenominator"]
+layout_mode = 2
+text = "+"
+
+[node name="SecontTestValue" type="Label" parent="Overview/FormulaContainer/FormulaDenominator"]
+layout_mode = 2
+text = "T2"
+
+[node name="HSeparator" type="HSeparator" parent="Overview/FormulaContainer"]
+layout_mode = 2
+
+[node name="FormulaDivisor" type="Label" parent="Overview/FormulaContainer"]
+layout_mode = 2
+text = "2"
+horizontal_alignment = 1
+
+[node name="ScoreWarning" type="Label" parent="Overview"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -103.5
+offset_top = -1.0
+offset_right = 75.5
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "You need to score 10.0 "
+
+[node name="OverviewAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pukbg")
+}
 
 [connection signal="pressed" from="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer/TestStartButton" to="." method="_on_button_pressed"]

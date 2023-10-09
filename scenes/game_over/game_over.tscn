@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=3 uid="uid://dckyei64f0fq6"]
+
+[ext_resource type="Script" path="res://scenes/game_over/game_over.gd" id="1_7qppo"]
+
+[node name="GameOver" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_7qppo")
+
+[node name="GameLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 216.0
+offset_top = -1.0
+offset_right = 417.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 70
+text = "GAME"
+
+[node name="OverLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 229.0
+offset_top = 70.0
+offset_right = 412.0
+offset_bottom = 169.0
+theme_override_font_sizes/font_size = 70
+text = "OVER"
+
+[node name="FailReasonLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 164.0
+offset_right = 492.0
+offset_bottom = 190.0
+text = "You failed to pass on a discipline"
+horizontal_alignment = 1
+
+[node name="FailurePhrase" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = 20.0
+offset_right = 58.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Now you think this course might not be what you want"
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 415.0
+offset_top = 328.0
+offset_right = 627.0
+offset_bottom = 354.0
+text = "Click to head to main menu"

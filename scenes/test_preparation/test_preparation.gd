@@ -8,10 +8,13 @@ signal stress_defined(stress_amount)
 var number_of_weeks:int = 4
 var rest_amount:int = 15
 var stress_amount:int = 25
-var writing_speed:int = 10
-var precision:int
+var writing_speed:int
+var precision:int = 20
 var choice_panels:Array = []
 var choice_panels_index:int = 1
+
+var preview_precision:int
+var preview_writing_speed:int
 
 
 @onready var test_name_label:Label = $VBoxContainer/TestNameLabel
@@ -25,13 +28,24 @@ var choice_panels_index:int = 1
 @onready var knowledge_bar_preview = $HBoxContainer3/VBoxContainer2/KnowledgeContainer/KnowledgeBar/KnowledgeBarPreview
 @onready var tiredness_preview_animation = $HBoxContainer3/VBoxContainer2/TirednessContainer/TirednessBar/TirednessBarPreview/TirednessPreviewAnimation
 @onready var knowledge_animation_preview = $HBoxContainer3/VBoxContainer2/KnowledgeContainer/KnowledgeBar/KnowledgeBarPreview/KnowledgeAnimationPreview
+@onready var overview_animation_player = $OverviewAnimationPlayer
+@onready var score_warning = $Overview/ScoreWarning
+@onready var first_test_value = $Overview/FormulaContainer/FormulaDenominator/FirstTestValue
+@onready var discipline_name = $Overview/DisciplineName
 
 
-func initialize(test_name:String, test_number:String, stress_level:int, semester_number:int):
+func _ready():
+	overview_animation_player.play("Fade out")
+
+func initialize(test_name:String, test_number:String, stress_level:int, semester_number:int, scores:Array):
 	test_name_label.text = "Semester " + str(semester_number) + " - " + test_name + " - " +  " Test " + str(int(test_number)+1)
 	tiredness_bar.value = stress_level
 	update_speed_value()
 	populate_choices()
+	discipline_name.text = test_name
+	if int(test_number) > 0:
+		update_formula(scores)
+		populate_score_warn(scores)
 
 
 func populate_choices():
@@ -60,10 +74,12 @@ func add_study_preview():
 		knowledge_bar_preview.value = knowledge_bar.value + 100 / number_of_weeks
 	else:
 		knowledge_bar_preview.value = 100
+	answer_precision_value.text = "Answer Precision: " + str(get_precision_value(knowledge_bar_preview.value)) +"%"
 	if tiredness_bar.value != 100:
 		tiredness_bar_preview.value = tiredness_bar.value + stress_amount
 	else:
 		tiredness_bar_preview.value = 100
+	writing_speed_value.text = "Writing Speed:" + str(get_writing_speed_value(tiredness_bar_preview.value))
 	knowledge_animation_preview.play("Pulse")
 	tiredness_preview_animation.play("Pulse")
 
@@ -71,6 +87,8 @@ func add_study_preview():
 func remove_preview():
 	knowledge_bar_preview.value = 0
 	tiredness_bar_preview.value = 0
+	writing_speed_value.text = "Writing Speed:" + str(writing_speed)
+	answer_precision_value.text = "Answer Precision: " + str(precision) +"%"
 	if tiredness_preview_animation.is_playing():
 		tiredness_preview_animation.stop()
 	if knowledge_animation_preview.is_playing():
@@ -83,6 +101,7 @@ func add_rest_preview():
 		tiredness_preview_animation.play("Pulse")
 	else:
 		tiredness_bar_preview.value = 0
+	writing_speed_value.text = "Writing Speed:" + str(get_writing_speed_value(tiredness_bar_preview.value))
 
 
 func study_selected():
@@ -96,18 +115,23 @@ func study_selected():
 
 
 func update_precision_value():
-	if knowledge_bar.value == 100:
-		precision = 80
-	elif knowledge_bar.value >= 75:
-		precision = 60
-	elif knowledge_bar.value >= 50:
-		precision = 50
-	elif knowledge_bar.value >= 25:
-		precision = 40
-	else:
-		precision = 20
-	knowledge_bar.tooltip_text = "Your answer precision is " + str(precision)
+	precision = get_precision_value(knowledge_bar.value)
 	answer_precision_value.text = "Answer Precision: " + str(precision) +"%"
+
+
+func get_precision_value(value:int) -> int:
+	var result:int
+	if value == 100:
+		result = 80
+	elif value >= 75:
+		result = 60
+	elif value >= 50:
+		result = 50
+	elif value >= 25:
+		result = 40
+	else:
+		result = 20
+	return result
 
 
 func rest_selected():
@@ -122,11 +146,15 @@ func rest_selected():
 
 
 func update_speed_value():
-	writing_speed = 20 - (tiredness_bar.value/10)
+	writing_speed = get_writing_speed_value(tiredness_bar.value)
+	writing_speed_value.text = "Writing Speed:" + str(writing_speed)
+
+
+func get_writing_speed_value(value:int) -> int:
+	var result:int = 20 - (float(value)/10.0)
 	if writing_speed == 0:
 		writing_speed = 10
-	tiredness_bar.tooltip_text = "Your writing speed is at " + str(writing_speed)
-	writing_speed_value.text = "Writing Speed:" + str(writing_speed)
+	return result
 
 
 func enable_next_choice_panel():
@@ -143,3 +171,13 @@ func enable_next_choice_panel():
 func _on_button_pressed():
 	emit_signal("finished_preparation", writing_speed, precision)
 	emit_signal("stress_defined", tiredness_bar.value)
+
+
+func populate_score_warn(scores:Array):
+	var necessary_score:float = 14.0 - scores[0]
+	score_warning.text = "You need to score " + str(necessary_score)
+	score_warning.visible = true
+
+
+func update_formula(scores:Array):
+	first_test_value.text = str(scores[0])

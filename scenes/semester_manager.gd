@@ -51,12 +51,13 @@ func has_passed() -> bool:
 func check_final_grades() -> bool:
 	var passed:bool = true
 	for discipline in disciplines_data:
-		var final_score:float = 0
-		for score in disciplines_data[discipline]["scores"]:
-			final_score += score
-		final_score = snapped(final_score / float(disciplines_data[discipline]["quantity"]), 0.1)
-		print_debug(discipline + "final score is: " + str(final_score))
-		disciplines_data[discipline]["final_grade"] = final_score
-		if final_score < 7.0:
-			passed = false
+		if disciplines_data[discipline]["quantity"] == disciplines_data[discipline]["scores"].size():
+			var final_score:float = 0
+			for score in disciplines_data[discipline]["scores"]:
+				final_score += score
+			final_score = snapped(final_score / float(disciplines_data[discipline]["quantity"]), 0.1)
+			print_debug(discipline + "final score is: " + str(final_score))
+			disciplines_data[discipline]["final_grade"] = final_score
+			if final_score < 7.0:
+				passed = false
 	return passed
