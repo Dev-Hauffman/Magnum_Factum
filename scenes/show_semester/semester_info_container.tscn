@@ -6,6 +6,7 @@
 bg_color = Color(0.360784, 0.360784, 0.360784, 1)
 
 [node name="SemesterInfoContainer" type="PanelContainer"]
+top_level = true
 offset_left = 102.0
 offset_top = 52.0
 offset_right = 522.0

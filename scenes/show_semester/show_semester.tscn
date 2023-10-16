@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://cx7c25w025c8l"]
+[gd_scene load_steps=4 format=3 uid="uid://cx7c25w025c8l"]
 
 [ext_resource type="Script" path="res://scenes/show_semester/show_semester.gd" id="1_b8dx0"]
+[ext_resource type="Texture2D" uid="uid://dwn1ouqfgus7w" path="res://resources/images/new semester screen.png" id="2_fhnn1"]
 [ext_resource type="PackedScene" uid="uid://bj8hhlvhti8vy" path="res://scenes/show_semester/semester_info_container.tscn" id="2_h52o1"]
 
 [node name="ShowSemester" type="Node2D"]
 script = ExtResource("1_b8dx0")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(321, 180)
+texture = ExtResource("2_fhnn1")
 
 [node name="SemesterInfoContainer" parent="." instance=ExtResource("2_h52o1")]
 visible = false

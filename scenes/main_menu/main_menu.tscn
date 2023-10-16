@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dmtpb588e8lng"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_5li3y"]
-[ext_resource type="Texture2D" uid="uid://y0sigk7vxpvv" path="res://resources/game tittle screen.png" id="1_v4onv"]
+[ext_resource type="Texture2D" uid="uid://y0sigk7vxpvv" path="res://resources/images/game tittle screen.png" id="2_7u8yn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sj31n"]
 bg_color = Color(0.886275, 0.866667, 0.0901961, 1)
@@ -17,7 +17,7 @@ script = ExtResource("1_5li3y")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(320, 180)
-texture = ExtResource("1_v4onv")
+texture = ExtResource("2_7u8yn")
 
 [node name="StartGameButton" type="Button" parent="."]
 offset_left = 27.0

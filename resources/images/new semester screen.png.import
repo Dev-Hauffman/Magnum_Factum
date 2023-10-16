@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://y0sigk7vxpvv"
-path="res://.godot/imported/game tittle screen.png-966beb73329b4022671009e86f35ffdc.ctex"
+uid="uid://dwn1ouqfgus7w"
+path="res://.godot/imported/new semester screen.png-d45c58b951bda8d8b8b9193c155d68e9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/game tittle screen.png"
-dest_files=["res://.godot/imported/game tittle screen.png-966beb73329b4022671009e86f35ffdc.ctex"]
+source_file="res://resources/images/new semester screen.png"
+dest_files=["res://.godot/imported/new semester screen.png-d45c58b951bda8d8b8b9193c155d68e9.ctex"]
 
 [params]
 
