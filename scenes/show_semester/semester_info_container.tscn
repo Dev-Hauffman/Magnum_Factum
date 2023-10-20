@@ -1,32 +1,36 @@
-[gd_scene load_steps=3 format=3 uid="uid://bj8hhlvhti8vy"]
+[gd_scene load_steps=5 format=3 uid="uid://bj8hhlvhti8vy"]
 
 [ext_resource type="Script" path="res://scenes/show_semester/semester_info_container.gd" id="1_aaonv"]
+[ext_resource type="Texture2D" uid="uid://4482hons8bdk" path="res://resources/images/blackboard.png" id="1_m48ke"]
+[ext_resource type="FontFile" uid="uid://cq0swmvbyy2nc" path="res://resources/fonts/EraserRegular.ttf" id="3_8ohr2"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uecll"]
-bg_color = Color(0.360784, 0.360784, 0.360784, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t4brw"]
+texture = ExtResource("1_m48ke")
 
 [node name="SemesterInfoContainer" type="PanelContainer"]
 top_level = true
-offset_left = 102.0
-offset_top = 52.0
-offset_right = 522.0
-offset_bottom = 287.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_uecll")
+offset_left = 52.0
+offset_top = 16.0
+offset_right = 595.0
+offset_bottom = 335.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_t4brw")
 script = ExtResource("1_aaonv")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
 theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 5
+theme_override_constants/margin_top = 35
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 15
+theme_override_constants/separation = 5
 
 [node name="SemesterLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_8ohr2")
+theme_override_font_sizes/font_size = 40
 text = "Semester 1"
 horizontal_alignment = 1
 
@@ -35,11 +39,14 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/DisciplinesContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_8ohr2")
+theme_override_font_sizes/font_size = 20
 text = "Disciplines:"
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/DisciplinesContainer"]
 visible = false
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_8ohr2")
 text = "Test"
 horizontal_alignment = 1

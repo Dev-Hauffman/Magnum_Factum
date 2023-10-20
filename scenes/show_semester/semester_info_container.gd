@@ -6,7 +6,7 @@ signal finished_animation
 
 var moving:bool = false
 var tween:Tween
-
+var font = load("res://resources/fonts/EraserRegular.ttf")
 
 
 @onready var semester_label = $MarginContainer/VBoxContainer/SemesterLabel
@@ -22,6 +22,8 @@ func initialize(current_semester:int, disciplines:Array):
 func populate_disciplines(disciplines):
 	for discipline in disciplines:
 		var label = Label.new()
+		label.add_theme_font_override("font", font)
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.text = discipline
 		disciplines_container.add_child(label)
 

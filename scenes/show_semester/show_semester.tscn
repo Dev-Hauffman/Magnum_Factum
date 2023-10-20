@@ -15,4 +15,4 @@ texture = ExtResource("2_fhnn1")
 visible = false
 
 [node name="SemesterInfoPosition" type="Marker2D" parent="."]
-position = Vector2(102, 52)
+position = Vector2(104, 9)
