@@ -6,7 +6,7 @@ signal finished_animation
 
 var moving:bool = false
 var tween:Tween
-var font = load("res://resources/fonts/EraserRegular.ttf")
+var font = load("res://resources/fonts/chawp.ttf")
 
 
 @onready var semester_label = $MarginContainer/VBoxContainer/SemesterLabel

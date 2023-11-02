@@ -5,6 +5,7 @@ signal finished_displaying
 
 
 var boards:Array = []
+var wait_time:float = 5
 
 
 @onready var semester_info_position = $SemesterInfoPosition
@@ -39,9 +40,9 @@ func present_boards():
 	for board in boards:
 		board.move_to(target)
 		move_child(board, boards.find(board))
-		target += 10
+		#target += 10
 		await get_tree().create_timer(1).timeout
 
 func finished_presentation():
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(wait_time).timeout
 	emit_signal("finished_displaying")

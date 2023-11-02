@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/show_semester/semester_info_container.gd" id="1_aaonv"]
 [ext_resource type="Texture2D" uid="uid://4482hons8bdk" path="res://resources/images/blackboard.png" id="1_m48ke"]
-[ext_resource type="FontFile" uid="uid://cq0swmvbyy2nc" path="res://resources/fonts/EraserRegular.ttf" id="3_8ohr2"]
+[ext_resource type="FontFile" uid="uid://j01lrvtlns0q" path="res://resources/fonts/chawp.ttf" id="3_t0tat"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t4brw"]
 texture = ExtResource("1_m48ke")
@@ -29,7 +29,7 @@ theme_override_constants/separation = 5
 
 [node name="SemesterLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_8ohr2")
+theme_override_fonts/font = ExtResource("3_t0tat")
 theme_override_font_sizes/font_size = 40
 text = "Semester 1"
 horizontal_alignment = 1
@@ -39,7 +39,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="MarginContainer/VBoxContainer/DisciplinesContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_8ohr2")
+theme_override_fonts/font = ExtResource("3_t0tat")
 theme_override_font_sizes/font_size = 20
 text = "Disciplines:"
 horizontal_alignment = 1
@@ -47,6 +47,6 @@ horizontal_alignment = 1
 [node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/DisciplinesContainer"]
 visible = false
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_8ohr2")
+theme_override_fonts/font = ExtResource("3_t0tat")
 text = "Test"
 horizontal_alignment = 1
