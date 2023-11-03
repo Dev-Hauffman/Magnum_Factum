@@ -29,9 +29,10 @@ var preview_writing_speed:int
 @onready var tiredness_preview_animation = $HBoxContainer3/VBoxContainer2/TirednessContainer/TirednessBar/TirednessBarPreview/TirednessPreviewAnimation
 @onready var knowledge_animation_preview = $HBoxContainer3/VBoxContainer2/KnowledgeContainer/KnowledgeBar/KnowledgeBarPreview/KnowledgeAnimationPreview
 @onready var overview_animation_player = $OverviewAnimationPlayer
-@onready var score_warning = $Overview/ScoreWarning
-@onready var first_test_value = $Overview/FormulaContainer/FormulaDenominator/FirstTestValue
-@onready var discipline_name = $Overview/DisciplineName
+@onready var score_warning = $PieceOfPaper/ScoreWarning
+@onready var first_test_value = $PieceOfPaper/FormulaContainer/FormulaDenominator/FirstTestValue
+@onready var discipline_name = $PieceOfPaper/DisciplineName
+@onready var piece_of_paper = $PieceOfPaper
 
 
 func _ready():
@@ -181,3 +182,11 @@ func populate_score_warn(scores:Array):
 
 func update_formula(scores:Array):
 	first_test_value.text = str(scores[0])
+	
+
+#not used
+#func _input(event):
+#	if event is InputEventMouseMotion:
+#		var new_rect = Rect2(piece_of_paper.get_rect().position + piece_of_paper.position, piece_of_paper.get_rect().size)
+#		if new_rect.has_point(get_viewport().get_mouse_position()):
+#			print_debug("detected!")

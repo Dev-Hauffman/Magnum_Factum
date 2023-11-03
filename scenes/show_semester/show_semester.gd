@@ -5,7 +5,7 @@ signal finished_displaying
 
 
 var boards:Array = []
-var wait_time:float = 5
+var wait_time:float = 4
 
 
 @onready var semester_info_position = $SemesterInfoPosition

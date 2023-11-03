@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cnatboplfjvps"]
+[gd_scene load_steps=14 format=3 uid="uid://cnatboplfjvps"]
 
 [ext_resource type="Script" path="res://scenes/test_preparation/test_preparation.gd" id="1_trmle"]
 [ext_resource type="PackedScene" uid="uid://dcn4tuxqo0gbr" path="res://scenes/test_preparation/choice_panel.tscn" id="2_d7i80"]
 [ext_resource type="Animation" uid="uid://btjqe6je1e1si" path="res://resources/pulse_animation.res" id="2_w42ns"]
+[ext_resource type="Texture2D" uid="uid://bvaqc3c3sb0xq" path="res://resources/images/piece of paper.png" id="4_rc18r"]
+[ext_resource type="FontFile" uid="uid://d4lc8shr2b76j" path="res://resources/fonts/FranHandwrite-Regular.ttf" id="5_vqh7b"]
 
 [sub_resource type="Theme" id="Theme_kip0t"]
 TooltipLabel/font_sizes/font_size = 10
@@ -38,7 +40,7 @@ _data = {
 
 [sub_resource type="Animation" id="Animation_3si2r"]
 resource_name = "Fade out"
-length = 2.0
+length = 3.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -62,6 +64,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PieceOfPaper:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3, 3.5),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Vector2(345, 181), Vector2(910, 181)]
 }
 
 [sub_resource type="Animation" id="Animation_oed7v"]
@@ -89,6 +103,18 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PieceOfPaper:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(345, 181)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_pukbg"]
@@ -279,6 +305,98 @@ disabled = true
 text = "LET'S
 DO IT!"
 
+[node name="PieceOfPaper" type="Sprite2D" parent="."]
+position = Vector2(345, 181)
+texture = ExtResource("4_rc18r")
+
+[node name="DisciplineName" type="Label" parent="PieceOfPaper"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -461.0
+offset_top = -301.0
+offset_right = -169.0
+offset_bottom = -275.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_vqh7b")
+theme_override_font_sizes/font_size = 20
+text = "Computability and Complexity Theory"
+horizontal_alignment = 1
+
+[node name="FormulaContainer" type="VBoxContainer" parent="PieceOfPaper"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -346.0
+offset_top = -262.0
+offset_right = -290.0
+offset_bottom = -198.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FormulaDenominator" type="HBoxContainer" parent="PieceOfPaper/FormulaContainer"]
+layout_mode = 2
+
+[node name="FirstTestValue" type="Label" parent="PieceOfPaper/FormulaContainer/FormulaDenominator"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_vqh7b")
+theme_override_font_sizes/font_size = 20
+text = "T1"
+
+[node name="Plus" type="Label" parent="PieceOfPaper/FormulaContainer/FormulaDenominator"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_vqh7b")
+theme_override_font_sizes/font_size = 20
+text = "+"
+
+[node name="SecontTestValue" type="Label" parent="PieceOfPaper/FormulaContainer/FormulaDenominator"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_vqh7b")
+theme_override_font_sizes/font_size = 20
+text = "T2"
+
+[node name="HSeparator" type="HSeparator" parent="PieceOfPaper/FormulaContainer"]
+layout_mode = 2
+
+[node name="FormulaDivisor" type="Label" parent="PieceOfPaper/FormulaContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_vqh7b")
+theme_override_font_sizes/font_size = 20
+text = "2"
+horizontal_alignment = 1
+
+[node name="ScoreWarning" type="Label" parent="PieceOfPaper"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -390.0
+offset_top = -176.0
+offset_right = -211.0
+offset_bottom = -150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_vqh7b")
+theme_override_font_sizes/font_size = 20
+text = "Needs to score 10.0 "
+
+[node name="OverviewAnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pukbg")
+}
+
 [node name="Overview" type="ColorRect" parent="."]
 anchors_preset = 15
 anchor_right = 1.0
@@ -286,79 +404,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
-
-[node name="DisciplineName" type="Label" parent="Overview"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -146.0
-offset_top = -111.0
-offset_right = 146.0
-offset_bottom = -85.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Computability and Complexity Theory"
-horizontal_alignment = 1
-
-[node name="FormulaContainer" type="VBoxContainer" parent="Overview"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -41.0
-offset_top = -73.0
-offset_right = 15.0
-offset_bottom = -9.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="FormulaDenominator" type="HBoxContainer" parent="Overview/FormulaContainer"]
-layout_mode = 2
-
-[node name="FirstTestValue" type="Label" parent="Overview/FormulaContainer/FormulaDenominator"]
-layout_mode = 2
-text = "T1"
-
-[node name="Plus" type="Label" parent="Overview/FormulaContainer/FormulaDenominator"]
-layout_mode = 2
-text = "+"
-
-[node name="SecontTestValue" type="Label" parent="Overview/FormulaContainer/FormulaDenominator"]
-layout_mode = 2
-text = "T2"
-
-[node name="HSeparator" type="HSeparator" parent="Overview/FormulaContainer"]
-layout_mode = 2
-
-[node name="FormulaDivisor" type="Label" parent="Overview/FormulaContainer"]
-layout_mode = 2
-text = "2"
-horizontal_alignment = 1
-
-[node name="ScoreWarning" type="Label" parent="Overview"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -103.5
-offset_top = -1.0
-offset_right = 75.5
-offset_bottom = 25.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "You need to score 10.0 "
-
-[node name="OverviewAnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_pukbg")
-}
 
 [connection signal="pressed" from="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer/TestStartButton" to="." method="_on_button_pressed"]
