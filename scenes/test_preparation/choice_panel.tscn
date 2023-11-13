@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dcn4tuxqo0gbr"]
+[gd_scene load_steps=3 format=3 uid="uid://dcn4tuxqo0gbr"]
 
 [ext_resource type="Script" path="res://scenes/test_preparation/choice_panel.gd" id="1_wvnko"]
+[ext_resource type="FontFile" uid="uid://cy1cittwoyplq" path="res://resources/fonts/LCDBlock.ttf" id="2_ueyrr"]
 
 [node name="ChoicePanel" type="PanelContainer"]
 size_flags_horizontal = 3
@@ -18,23 +19,30 @@ layout_mode = 2
 
 [node name="WeekLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ueyrr")
+theme_override_font_sizes/font_size = 20
 text = "Week 1"
 horizontal_alignment = 1
 
 [node name="StudyButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_ueyrr")
+theme_override_font_sizes/font_size = 20
 toggle_mode = true
 text = "Study"
 
 [node name="SeparatorLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ueyrr")
 text = "- or -"
 horizontal_alignment = 1
 
 [node name="RestButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("2_ueyrr")
+theme_override_font_sizes/font_size = 20
 toggle_mode = true
 text = "Rest"
 

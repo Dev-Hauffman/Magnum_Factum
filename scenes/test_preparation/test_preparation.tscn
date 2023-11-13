@@ -1,8 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://cnatboplfjvps"]
+[gd_scene load_steps=16 format=3 uid="uid://cnatboplfjvps"]
 
 [ext_resource type="Script" path="res://scenes/test_preparation/test_preparation.gd" id="1_trmle"]
 [ext_resource type="PackedScene" uid="uid://dcn4tuxqo0gbr" path="res://scenes/test_preparation/choice_panel.tscn" id="2_d7i80"]
+[ext_resource type="Texture2D" uid="uid://s1ref32cbynq" path="res://resources/images/tablet.png" id="2_vonei"]
 [ext_resource type="Animation" uid="uid://btjqe6je1e1si" path="res://resources/pulse_animation.res" id="2_w42ns"]
+[ext_resource type="FontFile" uid="uid://cy1cittwoyplq" path="res://resources/fonts/LCDBlock.ttf" id="3_kk247"]
 [ext_resource type="Texture2D" uid="uid://bvaqc3c3sb0xq" path="res://resources/images/piece of paper.png" id="4_rc18r"]
 [ext_resource type="FontFile" uid="uid://d4lc8shr2b76j" path="res://resources/fonts/FranHandwrite-Regular.ttf" id="5_vqh7b"]
 
@@ -126,18 +128,25 @@ _data = {
 [node name="TestPreparation" type="CanvasLayer"]
 script = ExtResource("1_trmle")
 
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(320, 180)
+texture = ExtResource("2_vonei")
+
 [node name="Label" type="Label" parent="."]
-offset_left = 176.0
-offset_right = 457.0
-offset_bottom = 45.0
-theme_override_font_sizes/font_size = 30
+offset_left = 154.0
+offset_top = 12.0
+offset_right = 501.0
+offset_bottom = 57.0
+theme_override_colors/font_color = Color(0, 0, 0.580392, 1)
+theme_override_fonts/font = ExtResource("3_kk247")
+theme_override_font_sizes/font_size = 50
 text = "CHOOSE YOUR DESTINY"
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="."]
-offset_left = 54.0
-offset_top = 290.0
-offset_right = 597.0
-offset_bottom = 346.0
+offset_left = 55.0
+offset_top = 275.0
+offset_right = 582.0
+offset_bottom = 337.0
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer3"]
 layout_mode = 2
@@ -149,6 +158,11 @@ alignment = 1
 
 [node name="TirednessLabel" type="Label" parent="HBoxContainer3/VBoxContainer2/TirednessContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.1
+theme_override_colors/font_color = Color(0, 0, 0.580392, 1)
+theme_override_fonts/font = ExtResource("3_kk247")
+theme_override_font_sizes/font_size = 30
 text = "Tiredness"
 
 [node name="TirednessBar" type="ProgressBar" parent="HBoxContainer3/VBoxContainer2/TirednessContainer"]
@@ -161,10 +175,11 @@ show_percentage = false
 
 [node name="WritingSpeedValue" type="Label" parent="HBoxContainer3/VBoxContainer2/TirednessContainer/TirednessBar"]
 layout_mode = 0
-offset_left = 162.0
-offset_top = 1.0
-offset_right = 300.0
-offset_bottom = 27.0
+offset_left = 134.0
+offset_right = 293.0
+offset_bottom = 29.0
+theme_override_fonts/font = ExtResource("3_kk247")
+theme_override_font_sizes/font_size = 30
 text = "Writing Speed: 10"
 
 [node name="TirednessBarPreview" type="ProgressBar" parent="HBoxContainer3/VBoxContainer2/TirednessContainer/TirednessBar"]
@@ -186,6 +201,9 @@ alignment = 1
 
 [node name="KnowledgeLabel" type="Label" parent="HBoxContainer3/VBoxContainer2/KnowledgeContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0.580392, 1)
+theme_override_fonts/font = ExtResource("3_kk247")
+theme_override_font_sizes/font_size = 30
 text = "Knowledge"
 
 [node name="KnowledgeBar" type="ProgressBar" parent="HBoxContainer3/VBoxContainer2/KnowledgeContainer"]
@@ -198,10 +216,11 @@ show_percentage = false
 
 [node name="AnswerPrecisionValue" type="Label" parent="HBoxContainer3/VBoxContainer2/KnowledgeContainer/KnowledgeBar"]
 layout_mode = 0
-offset_left = 131.0
-offset_top = 1.0
-offset_right = 305.0
-offset_bottom = 27.0
+offset_left = 107.0
+offset_right = 315.0
+offset_bottom = 29.0
+theme_override_fonts/font = ExtResource("3_kk247")
+theme_override_font_sizes/font_size = 30
 text = "Answer Precision: 20%"
 
 [node name="KnowledgeBarPreview" type="ProgressBar" parent="HBoxContainer3/VBoxContainer2/KnowledgeContainer/KnowledgeBar"]
@@ -221,10 +240,13 @@ libraries = {
 offset_left = 56.0
 offset_top = 61.0
 offset_right = 594.0
-offset_bottom = 278.0
+offset_bottom = 271.0
 
 [node name="TestNameLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0.580392, 1)
+theme_override_fonts/font = ExtResource("3_kk247")
+theme_override_font_sizes/font_size = 25
 text = "Semester I - Computability and Complexity Theory - Test I"
 horizontal_alignment = 1
 autowrap_mode = 2
@@ -295,17 +317,22 @@ theme_override_constants/separation = 35
 
 [node name="TestDayLabel" type="Label" parent="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_kk247")
+theme_override_font_sizes/font_size = 20
 text = "Test Day
 "
 horizontal_alignment = 1
 
 [node name="TestStartButton" type="Button" parent="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("3_kk247")
+theme_override_font_sizes/font_size = 20
 disabled = true
 text = "LET'S
 DO IT!"
 
 [node name="PieceOfPaper" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(345, 181)
 texture = ExtResource("4_rc18r")
 
