@@ -1,16 +1,39 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmtpb588e8lng"]
+[gd_scene load_steps=9 format=3 uid="uid://dmtpb588e8lng"]
 
 [ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_5li3y"]
 [ext_resource type="Texture2D" uid="uid://y0sigk7vxpvv" path="res://resources/images/game tittle screen.png" id="2_7u8yn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sj31n"]
 bg_color = Color(0.886275, 0.866667, 0.0901961, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2dki"]
 bg_color = Color(0.956863, 0.431373, 0.121569, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_53gxx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tfcfs"]
 bg_color = Color(0.886275, 0.866667, 0.0901961, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_anmkb"]
+bg_color = Color(0.956863, 0.431373, 0.121569, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tqykh"]
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_5li3y")
@@ -26,7 +49,9 @@ offset_right = 123.0
 offset_bottom = 299.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_sj31n")
+theme_override_styles/hover = SubResource("StyleBoxFlat_j2dki")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_j2dki")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_53gxx")
 text = "Start Game"
 
 [node name="ExitGameButton" type="Button" parent="."]
@@ -37,6 +62,9 @@ offset_right = 610.0
 offset_bottom = 300.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_tfcfs")
+theme_override_styles/hover = SubResource("StyleBoxFlat_anmkb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_anmkb")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tqykh")
 text = "Exit Game"
 
 [connection signal="pressed" from="StartGameButton" to="." method="_on_start_game_button_pressed"]

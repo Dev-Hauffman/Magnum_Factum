@@ -1,10 +1,66 @@
-[gd_scene load_steps=3 format=3 uid="uid://dcn4tuxqo0gbr"]
+[gd_scene load_steps=13 format=3 uid="uid://dcn4tuxqo0gbr"]
 
 [ext_resource type="Script" path="res://scenes/test_preparation/choice_panel.gd" id="1_wvnko"]
 [ext_resource type="FontFile" uid="uid://cy1cittwoyplq" path="res://resources/fonts/LCDBlock.ttf" id="2_ueyrr"]
+[ext_resource type="Texture2D" uid="uid://r1hos5ut5mg7" path="res://resources/images/red circling.png" id="3_h3l2r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_df7tn"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0.580392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5t8mi"]
+bg_color = Color(0, 0, 0.580392, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ufpl"]
+bg_color = Color(0, 0, 0.580392, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y733j"]
+bg_color = Color(0, 0, 0.580392, 0.392157)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sgvaw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4f8bj"]
+bg_color = Color(0, 0, 0.580392, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c1hhm"]
+bg_color = Color(0, 0, 0.580392, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j67eu"]
+bg_color = Color(0, 0, 0.580392, 0.392157)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8pcft"]
 
 [node name="ChoicePanel" type="PanelContainer"]
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_df7tn")
 script = ExtResource("1_wvnko")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -19,6 +75,7 @@ layout_mode = 2
 
 [node name="WeekLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0.580392, 1)
 theme_override_fonts/font = ExtResource("2_ueyrr")
 theme_override_font_sizes/font_size = 20
 text = "Week 1"
@@ -29,11 +86,16 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("2_ueyrr")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_5t8mi")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8ufpl")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_y733j")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_sgvaw")
 toggle_mode = true
 text = "Study"
 
 [node name="SeparatorLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0.580392, 1)
 theme_override_fonts/font = ExtResource("2_ueyrr")
 text = "- or -"
 horizontal_alignment = 1
@@ -43,8 +105,17 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("2_ueyrr")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_4f8bj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_c1hhm")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_j67eu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8pcft")
 toggle_mode = true
 text = "Rest"
+
+[node name="RedCirclingSprite" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("3_h3l2r")
 
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/StudyButton" to="." method="_on_study_button_mouse_entered"]
 [connection signal="mouse_exited" from="MarginContainer/VBoxContainer/StudyButton" to="." method="_on_study_button_mouse_exited"]

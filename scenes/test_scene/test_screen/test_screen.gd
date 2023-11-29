@@ -3,6 +3,7 @@ extends Node2D
 
 signal initialized
 signal finished_test(final_score)
+signal finished_showing
 
 
 var questions_info:Array[QuestionInfo] = []
@@ -27,7 +28,8 @@ func _ready():
 	await initialized
 	#await get_tree().process_frame #is this necessary?
 	#await get_tree().create_timer(18.0).timeout
-	#await show_questions()
+	show_questions()
+	await finished_showing
 	camera_controller.can_move = true
 	camera_controller.can_zoom = true
 	timer.start()
@@ -70,16 +72,18 @@ func show_questions():
 	var height_middle = question.global_position.y + get_viewport_rect().size.y/4
 	camera_controller.move_and_zoom(Vector2(middle,height_middle), Vector2(2, 2))
 	await camera_controller.moved_and_zoomed
-	await get_tree().create_timer(1).timeout
+	await get_tree().create_timer(0.3).timeout
 	for i in range(1, questions.size()):
 		question = questions[i]
 		height_middle = question.global_position.y + get_viewport_rect().size.y/4 # why 4? Because the screen is divide in 2 viewports, but you have to divide it by 2 to get their half (it doesn't matter if they're side by side or on top of each other)
 		camera_controller.move_to(Vector2(middle, height_middle), 1.0)
 		await camera_controller.finished_moving
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(0.3).timeout
 	question = questions[0]
 	height_middle = question.global_position.y + get_viewport_rect().size.y/4
 	camera_controller.move_and_zoom(Vector2(middle,height_middle), Vector2(1, 1))
+	await camera_controller.moved_and_zoomed
+	emit_signal("finished_showing") 
 
 
 func treat_question_click(position:Vector2):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cnatboplfjvps"]
+[gd_scene load_steps=27 format=3 uid="uid://cnatboplfjvps"]
 
 [ext_resource type="Script" path="res://scenes/test_preparation/test_preparation.gd" id="1_trmle"]
 [ext_resource type="PackedScene" uid="uid://dcn4tuxqo0gbr" path="res://scenes/test_preparation/choice_panel.tscn" id="2_d7i80"]
@@ -8,8 +8,29 @@
 [ext_resource type="Texture2D" uid="uid://bvaqc3c3sb0xq" path="res://resources/images/piece of paper.png" id="4_rc18r"]
 [ext_resource type="FontFile" uid="uid://d4lc8shr2b76j" path="res://resources/fonts/FranHandwrite-Regular.ttf" id="5_vqh7b"]
 
-[sub_resource type="Theme" id="Theme_kip0t"]
-TooltipLabel/font_sizes/font_size = 10
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ktrn0"]
+bg_color = Color(0, 0, 0.580392, 0.392157)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6vjb0"]
+bg_color = Color(0, 0, 0.580392, 0.392157)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5ks3d"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hswr1"]
+bg_color = Color(0, 0, 0.580392, 0.392157)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [sub_resource type="Animation" id="Animation_oin8y"]
 length = 0.001
@@ -35,10 +56,63 @@ _data = {
 [sub_resource type="Theme" id="Theme_m5n2d"]
 TooltipLabel/font_sizes/font_size = 10
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q1nln"]
+bg_color = Color(0, 0, 0.580392, 0.392157)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ep8ie"]
+bg_color = Color(0, 0, 0.580392, 0.392157)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icue8"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kdx8k"]
+bg_color = Color(0, 0, 0.580392, 0.392157)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_toxy5"]
 _data = {
 "Pulse": ExtResource("2_w42ns")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svphp"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0.580392, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbtna"]
+bg_color = Color(0, 0, 0.580392, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tw50q"]
+bg_color = Color(0, 0, 0.580392, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_juy8a"]
+bg_color = Color(0, 0, 0.580392, 0.392157)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="Animation" id="Animation_3si2r"]
 resource_name = "Fade out"
@@ -145,7 +219,7 @@ text = "CHOOSE YOUR DESTINY"
 [node name="HBoxContainer3" type="HBoxContainer" parent="."]
 offset_left = 55.0
 offset_top = 275.0
-offset_right = 582.0
+offset_right = 554.0
 offset_bottom = 337.0
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="HBoxContainer3"]
@@ -170,7 +244,8 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 tooltip_text = "Writing speed defines how many letters you write per click "
-theme = SubResource("Theme_kip0t")
+theme_override_styles/background = SubResource("StyleBoxFlat_ktrn0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_6vjb0")
 show_percentage = false
 
 [node name="WritingSpeedValue" type="Label" parent="HBoxContainer3/VBoxContainer2/TirednessContainer/TirednessBar"]
@@ -185,9 +260,11 @@ text = "Writing Speed: 10"
 [node name="TirednessBarPreview" type="ProgressBar" parent="HBoxContainer3/VBoxContainer2/TirednessContainer/TirednessBar"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_right = 464.0
-offset_bottom = 27.0
+offset_right = 401.0
+offset_bottom = 29.0
 mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_5ks3d")
+theme_override_styles/fill = SubResource("StyleBoxFlat_hswr1")
 show_percentage = false
 
 [node name="TirednessPreviewAnimation" type="AnimationPlayer" parent="HBoxContainer3/VBoxContainer2/TirednessContainer/TirednessBar/TirednessBarPreview"]
@@ -212,6 +289,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 tooltip_text = "Answer precision defines how likely you are to be correct on each paragraph write"
 theme = SubResource("Theme_m5n2d")
+theme_override_styles/background = SubResource("StyleBoxFlat_q1nln")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ep8ie")
 show_percentage = false
 
 [node name="AnswerPrecisionValue" type="Label" parent="HBoxContainer3/VBoxContainer2/KnowledgeContainer/KnowledgeBar"]
@@ -226,9 +305,11 @@ text = "Answer Precision: 20%"
 [node name="KnowledgeBarPreview" type="ProgressBar" parent="HBoxContainer3/VBoxContainer2/KnowledgeContainer/KnowledgeBar"]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_right = 453.0
-offset_bottom = 27.0
+offset_right = 401.0
+offset_bottom = 29.0
 mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_icue8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_kdx8k")
 show_percentage = false
 
 [node name="KnowledgeAnimationPreview" type="AnimationPlayer" parent="HBoxContainer3/VBoxContainer2/KnowledgeContainer/KnowledgeBar/KnowledgeBarPreview"]
@@ -303,6 +384,7 @@ horizontal_alignment = 1
 [node name="TestContainer" type="PanelContainer" parent="VBoxContainer/ChoiceContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_svphp")
 
 [node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/ChoiceContainer/TestContainer"]
 layout_mode = 2
@@ -317,6 +399,7 @@ theme_override_constants/separation = 35
 
 [node name="TestDayLabel" type="Label" parent="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0.580392, 1)
 theme_override_fonts/font = ExtResource("3_kk247")
 theme_override_font_sizes/font_size = 20
 text = "Test Day
@@ -327,6 +410,9 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_kk247")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_kbtna")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tw50q")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_juy8a")
 disabled = true
 text = "LET'S
 DO IT!"
