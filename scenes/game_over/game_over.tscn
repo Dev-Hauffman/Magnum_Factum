@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dckyei64f0fq6"]
+[gd_scene load_steps=3 format=3 uid="uid://dckyei64f0fq6"]
 
 [ext_resource type="Script" path="res://scenes/game_over/game_over.gd" id="1_7qppo"]
+[ext_resource type="AudioStream" uid="uid://cgx2f1xcdifwe" path="res://resources/music/game_over.ogg" id="2_lbwci"]
 
 [node name="GameOver" type="ColorRect"]
 anchors_preset = 15
@@ -61,3 +62,7 @@ offset_top = 328.0
 offset_right = 627.0
 offset_bottom = 354.0
 text = "Click to head to main menu"
+
+[node name="GameOverMusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_lbwci")
+autoplay = true

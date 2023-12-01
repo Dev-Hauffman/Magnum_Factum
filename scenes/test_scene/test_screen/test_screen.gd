@@ -20,6 +20,7 @@ var questions = []
 @onready var clock_ticking_sound = $ClockTickingSound
 @onready var clock_ticking_player = $ClockTickingPlayer
 @onready var ten_seconds_annouce = $TenSecondsAnnouce
+@onready var finish_button = $FinishButton
 
 
 func _ready():
@@ -109,6 +110,7 @@ func _on_test_panel_container_resized():
 
 
 func _on_timer_timeout():
+	disable_finish_button()
 	print_debug("time out")
 	for children in questions_container.get_children():
 		if children.visible == true:
@@ -132,3 +134,12 @@ func stop_clock_ticking():
 
 func ten_seconds_warn():
 	ten_seconds_annouce.play()
+
+
+func _on_finish_button_pressed():
+	disable_finish_button()
+	_on_timer_timeout()
+
+
+func disable_finish_button():
+	finish_button.disabled = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjk32f1avr400"]
+[gd_scene load_steps=17 format=3 uid="uid://bjk32f1avr400"]
 
 [ext_resource type="Script" path="res://scenes/test_scene/test_screen/test_screen.gd" id="1_au1b5"]
 [ext_resource type="Script" path="res://scenes/test_scene/scripts/camera_controller.gd" id="2_arboi"]
@@ -75,6 +75,21 @@ _data = {
 "RESET": SubResource("Animation_hnj1b"),
 "clock_ticking": SubResource("Animation_wnh1i")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j67h5"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bxobd"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a5f23"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijjhh"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pffl7"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [node name="TestScreen" type="Node2D"]
 script = ExtResource("1_au1b5")
@@ -173,5 +188,20 @@ libraries = {
 stream = ExtResource("5_w3cih")
 bus = &"Annoucer"
 
+[node name="FinishButton" type="Button" parent="."]
+offset_left = 228.0
+offset_top = 3.0
+offset_right = 286.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxFlat_j67h5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bxobd")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a5f23")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ijjhh")
+theme_override_styles/focus = SubResource("StyleBoxFlat_pffl7")
+text = "tap to finish"
+
 [connection signal="resized" from="TestPanelContainer" to="." method="_on_test_panel_container_resized"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="FinishButton" to="." method="_on_finish_button_pressed"]
