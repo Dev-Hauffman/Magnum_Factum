@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cnatboplfjvps"]
+[gd_scene load_steps=29 format=3 uid="uid://cnatboplfjvps"]
 
 [ext_resource type="Script" path="res://scenes/test_preparation/test_preparation.gd" id="1_trmle"]
 [ext_resource type="PackedScene" uid="uid://dcn4tuxqo0gbr" path="res://scenes/test_preparation/choice_panel.tscn" id="2_d7i80"]
@@ -7,6 +7,8 @@
 [ext_resource type="FontFile" uid="uid://cy1cittwoyplq" path="res://resources/fonts/LCDBlock.ttf" id="3_kk247"]
 [ext_resource type="Texture2D" uid="uid://bvaqc3c3sb0xq" path="res://resources/images/piece of paper.png" id="4_rc18r"]
 [ext_resource type="FontFile" uid="uid://d4lc8shr2b76j" path="res://resources/fonts/FranHandwrite-Regular.ttf" id="5_vqh7b"]
+[ext_resource type="AudioStream" uid="uid://b6d2wxldtpmp4" path="res://resources/music/test_preparation_3.ogg" id="8_cgbv4"]
+[ext_resource type="AudioStream" uid="uid://mw1q14nanoig" path="res://resources/Audio/paper_sheet.ogg" id="9_2u24r"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ktrn0"]
 bg_color = Color(0, 0, 0.580392, 0.392157)
@@ -152,6 +154,20 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(-2, 1),
 "update": 0,
 "values": [Vector2(345, 181), Vector2(910, 181)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"paper_sheet_sound_play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_oed7v"]
@@ -418,7 +434,6 @@ text = "LET'S
 DO IT!"
 
 [node name="PieceOfPaper" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(345, 181)
 texture = ExtResource("4_rc18r")
 
@@ -505,6 +520,18 @@ theme_override_fonts/font = ExtResource("5_vqh7b")
 theme_override_font_sizes/font_size = 20
 text = "Needs to score 10.0 "
 
+[node name="ColorRect" type="ColorRect" parent="PieceOfPaper"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -295.0
+offset_top = -180.0
+offset_right = -295.0
+offset_bottom = -180.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0)
+
 [node name="OverviewAnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_pukbg")
@@ -517,5 +544,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_cgbv4")
+autoplay = true
+
+[node name="PaperSheetSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_2u24r")
 
 [connection signal="pressed" from="VBoxContainer/ChoiceContainer/TestContainer/MarginContainer/VBoxContainer/TestStartButton" to="." method="_on_button_pressed"]

@@ -1,8 +1,83 @@
-[gd_scene load_steps=4 format=3 uid="uid://cx7c25w025c8l"]
+[gd_scene load_steps=12 format=3 uid="uid://cx7c25w025c8l"]
 
 [ext_resource type="Script" path="res://scenes/show_semester/show_semester.gd" id="1_b8dx0"]
 [ext_resource type="Texture2D" uid="uid://dwn1ouqfgus7w" path="res://resources/images/new semester screen.png" id="2_fhnn1"]
 [ext_resource type="PackedScene" uid="uid://bj8hhlvhti8vy" path="res://scenes/show_semester/semester_info_container.tscn" id="2_h52o1"]
+[ext_resource type="AudioStream" uid="uid://blfhwhd6vrbky" path="res://resources/music/diploma_screen.ogg" id="4_tulav"]
+[ext_resource type="AudioStream" uid="uid://dy7b06ecni1ln" path="res://resources/Audio/board_slide.ogg" id="5_c3gtb"]
+
+[sub_resource type="Animation" id="Animation_jvq6k"]
+resource_name = "music_volume_drop"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MusicPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -20.8]
+}
+
+[sub_resource type="Animation" id="Animation_5i0ro"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MusicPlayer:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mn151"]
+_data = {
+"RESET": SubResource("Animation_5i0ro"),
+"music_volume_drop": SubResource("Animation_jvq6k")
+}
+
+[sub_resource type="Animation" id="Animation_m5bcw"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../WhiteScreen:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5f46o"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../WhiteScreen:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l8dur"]
+_data = {
+"RESET": SubResource("Animation_5f46o"),
+"fade_out": SubResource("Animation_m5bcw")
+}
 
 [node name="ShowSemester" type="Node2D"]
 script = ExtResource("1_b8dx0")
@@ -16,3 +91,30 @@ visible = false
 
 [node name="SemesterInfoPosition" type="Marker2D" parent="."]
 position = Vector2(104, 19)
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_tulav")
+autoplay = true
+
+[node name="BoardSlidingPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_c3gtb")
+
+[node name="MusicSoundController" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mn151")
+}
+
+[node name="WhiteScreen" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WhiteScreenPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite2D")
+libraries = {
+"": SubResource("AnimationLibrary_l8dur")
+}

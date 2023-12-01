@@ -18,6 +18,8 @@ var correction_offset:float = 2
 @onready var study_button = $MarginContainer/VBoxContainer/StudyButton
 @onready var rest_button = $MarginContainer/VBoxContainer/RestButton
 @onready var margin:MarginContainer = $MarginContainer
+@onready var button_hover_sound = $ButtonHoverSound
+@onready var button_pressed_sound = $ButtonPressedSound
 
 
 func initialize(week_value:String):
@@ -27,6 +29,7 @@ func initialize(week_value:String):
 
 
 func _on_study_button_pressed():
+	button_pressed_sound.play()
 	red_circling_sprite.visible = true
 	red_circling_sprite.position.y = study_button.global_position.y - study_button.size.y - margin.get_theme_constant("margin_top") + correction_offset
 	red_circling_sprite.position.x = study_button.position.x + (study_button.size.x/2) + margin.get_theme_constant("margin_left") + correction_offset
@@ -36,6 +39,7 @@ func _on_study_button_pressed():
 
 
 func _on_rest_button_pressed():
+	button_pressed_sound.play()
 	red_circling_sprite.visible = true
 	red_circling_sprite.position.y = rest_button.global_position.y - rest_button.size.y - margin.get_theme_constant("margin_top") + correction_offset
 	red_circling_sprite.position.x = rest_button.position.x + (rest_button.size.x/2) + margin.get_theme_constant("margin_left") + correction_offset
@@ -46,6 +50,7 @@ func _on_rest_button_pressed():
 
 func _on_study_button_mouse_entered():
 	if not study_button.disabled:
+		button_hover_sound.play()
 		emit_signal("study_mouse_entered")
 
 
@@ -56,6 +61,7 @@ func _on_study_button_mouse_exited():
 
 func _on_rest_button_mouse_entered():
 	if not study_button.disabled:
+		button_hover_sound.play()
 		emit_signal("rest_mouse_entered")
 
 

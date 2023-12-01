@@ -1,13 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://da1gngfv686de"]
+[gd_scene load_steps=18 format=3 uid="uid://da1gngfv686de"]
 
 [ext_resource type="Script" path="res://scenes/test_scene/test_scene.gd" id="1_p0b4e"]
 [ext_resource type="PackedScene" uid="uid://bjk32f1avr400" path="res://scenes/test_scene/test_screen/test_screen.tscn" id="1_ta3gf"]
 [ext_resource type="Script" path="res://scenes/test_scene/time_out_notice.gd" id="3_nen2e"]
 [ext_resource type="FontFile" uid="uid://bfw4h5tvlx56k" path="res://resources/fonts/Mabook.ttf" id="4_ahlwr"]
-[ext_resource type="AudioStream" uid="uid://cg6bapfuk0toj" path="res://resources/Audio/Voices/Time is up 9.wav" id="5_8omb1"]
-[ext_resource type="AudioStream" uid="uid://dcp528r8i1qta" path="res://resources/Audio/Voices/Get ready 6.wav" id="6_btuw5"]
-[ext_resource type="AudioStream" uid="uid://dvkdrq8pufxdb" path="res://resources/Audio/Voices/Write_fixed.ogg" id="7_g15g2"]
-[ext_resource type="AudioStream" uid="uid://es2nn7epxcdv" path="res://resources/music/test music2.ogg" id="8_v0gmi"]
 
 [sub_resource type="Animation" id="Animation_sthhu"]
 length = 0.001
@@ -456,18 +452,3 @@ autowrap_mode = 0
 libraries = {
 "": SubResource("AnimationLibrary_x8pi7")
 }
-
-[node name="TimeIsUpVoice" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_8omb1")
-bus = &"Annoucer"
-
-[node name="GetReadyVoice" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_btuw5")
-bus = &"Annoucer"
-
-[node name="WriteVoice" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_g15g2")
-
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_v0gmi")
-autoplay = true

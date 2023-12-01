@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://es2nn7epxcdv"
+path="res://.godot/imported/test music2.ogg-dd7f0cb6d4b86d2259d962cde0c113ed.oggvorbisstr"
+
+[deps]
+
+source_file="res://resources/music/test music2.ogg"
+dest_files=["res://.godot/imported/test music2.ogg-dd7f0cb6d4b86d2259d962cde0c113ed.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

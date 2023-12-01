@@ -9,11 +9,16 @@ var wait_time:float = 2
 
 
 @onready var semester_info_position = $SemesterInfoPosition
+@onready var board_sliding_player = $BoardSlidingPlayer
+@onready var music_sound_controller = $MusicSoundController
+@onready var white_screen_player = $WhiteScreenPlayer
 
 
 func start(current_semester:int):
+	white_screen_player.play("fade_out")
 	create_boards(current_semester)
-	await get_tree().create_timer(1).timeout
+	await white_screen_player.animation_finished
+	await get_tree().create_timer(1).timeout #time to show the objective diploma
 	present_boards()
 
 
@@ -38,11 +43,14 @@ func present_boards():
 	var target:float = semester_info_position.position.y
 	boards.reverse()
 	for board in boards:
+		board_sliding_player.play()
+		await get_tree().create_timer(0.2).timeout
 		board.move_to(target)
 		move_child(board, boards.find(board))
 		#target += 10
 		await get_tree().create_timer(1).timeout
 
 func finished_presentation():
+	music_sound_controller.play("music_volume_drop")
 	await get_tree().create_timer(wait_time).timeout
 	emit_signal("finished_displaying")

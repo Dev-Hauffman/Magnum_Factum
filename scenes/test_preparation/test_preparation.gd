@@ -33,6 +33,7 @@ var preview_writing_speed:int
 @onready var first_test_value = $PieceOfPaper/FormulaContainer/FormulaDenominator/FirstTestValue
 @onready var discipline_name = $PieceOfPaper/DisciplineName
 @onready var piece_of_paper = $PieceOfPaper
+@onready var paper_sheet_sound = $PaperSheetSound
 
 
 func _ready():
@@ -47,6 +48,8 @@ func initialize(test_name:String, test_number:String, stress_level:int, semester
 	if int(test_number) > 0:
 		update_formula(scores)
 		populate_score_warn(scores)
+	else:
+		score_warning.visible = false
 
 
 func populate_choices():
@@ -182,8 +185,13 @@ func populate_score_warn(scores:Array):
 
 func update_formula(scores:Array):
 	first_test_value.text = str(scores[0])
-	
 
+
+func paper_sheet_sound_play():
+	paper_sheet_sound.play()
+
+
+#code to make paper move when hovered upon
 #not used
 #func _input(event):
 #	if event is InputEventMouseMotion:

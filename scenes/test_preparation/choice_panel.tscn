@@ -1,8 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dcn4tuxqo0gbr"]
+[gd_scene load_steps=15 format=3 uid="uid://dcn4tuxqo0gbr"]
 
 [ext_resource type="Script" path="res://scenes/test_preparation/choice_panel.gd" id="1_wvnko"]
 [ext_resource type="FontFile" uid="uid://cy1cittwoyplq" path="res://resources/fonts/LCDBlock.ttf" id="2_ueyrr"]
 [ext_resource type="Texture2D" uid="uid://r1hos5ut5mg7" path="res://resources/images/red circling.png" id="3_h3l2r"]
+[ext_resource type="AudioStream" uid="uid://y2glts31rux0" path="res://resources/Audio/button/click.ogg" id="4_nyulx"]
+[ext_resource type="AudioStream" uid="uid://cysrnhmhy04tn" path="res://resources/Audio/button/button_click_2.ogg" id="5_3tdgs"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_df7tn"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -116,6 +118,12 @@ text = "Rest"
 visible = false
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("3_h3l2r")
+
+[node name="ButtonHoverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_nyulx")
+
+[node name="ButtonPressedSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_3tdgs")
 
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/StudyButton" to="." method="_on_study_button_mouse_entered"]
 [connection signal="mouse_exited" from="MarginContainer/VBoxContainer/StudyButton" to="." method="_on_study_button_mouse_exited"]

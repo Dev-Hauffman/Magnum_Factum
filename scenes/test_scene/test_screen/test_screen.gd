@@ -17,6 +17,9 @@ var questions = []
 @onready var limits:PanelContainer = $LimitsContainer
 @onready var questions_container = $TestPanelContainer/TestMarginContainer/QuestionsContainer
 @onready var timer = $Timer
+@onready var clock_ticking_sound = $ClockTickingSound
+@onready var clock_ticking_player = $ClockTickingPlayer
+@onready var ten_seconds_annouce = $TenSecondsAnnouce
 
 
 func _ready():
@@ -30,10 +33,13 @@ func _ready():
 	#await get_tree().create_timer(18.0).timeout
 	show_questions()
 	await finished_showing
+	timer.start()
+	clock_ticking_player.play("clock_ticking")
 	camera_controller.can_move = true
 	camera_controller.can_zoom = true
-	timer.start()
-	
+	for children in questions_container.get_children():
+		if children.visible == true:
+			children.can_click = true
 
 
 func initialize(camera:Camera2D, writing_speed:int, precision:int):
@@ -114,3 +120,15 @@ func _on_timer_timeout():
 	final_score = snapped(final_score, 0.1)
 	print_debug("final score: " + str(final_score))
 	emit_signal("finished_test", final_score)
+
+
+func play_clock_ticking():
+	clock_ticking_sound.play()
+
+
+func stop_clock_ticking():
+	clock_ticking_sound.stop()
+
+
+func ten_seconds_warn():
+	ten_seconds_annouce.play()
